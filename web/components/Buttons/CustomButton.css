@@ -1,0 +1,86 @@
+/* Base button styles – matches Polaris’s base typography and spacing */
+.custom-button {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif; /* Polaris font stack :contentReference[oaicite:11]{index=11} */
+  font-weight: 500;              /* Medium weight to match Polaris button text :contentReference[oaicite:12]{index=12} */
+  font-size: 0.9rem;               /* Matches Polaris button text size (Inter 16px ≈ 12pt) :contentReference[oaicite:13]{index=13} */
+  line-height: 1;                /* Keep line-height at 1 to center text vertically */
+  border: none;
+  border-radius: 8px;            /* Polaris uses 8px radius on buttons :contentReference[oaicite:14]{index=14} */
+  cursor: pointer;
+  display: inline-flex;          /* Use inline-flex to allow centering of content */
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  text-decoration: none;         /* Remove underline on plain by default */
+  vertical-align: middle;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, filter 0.2s;
+  /* Use custom property for background color (set via --button-color) */
+}
+.custom-button__text {
+  display: inline-block;
+}
+
+/* Default colors (can be overridden by --button-color style) */
+.custom-button--primary {
+  --button-color: #d773aa;       /* Default primary color (indigo  as example) */
+  background-color: var(--button-color);
+  color: #fff;                   /* White text on colored background */
+}
+.custom-button--secondary {
+  --button-color: #b2648f;       /* Default outline color */
+  background-color: #fff;        /* Secondary buttons have white (or transparent) background */
+  color: var(--button-color);
+  border: 1px solid var(--button-color);
+}
+.custom-button--plain {
+  --button-color: #d773aa;       /* Default link color (pink) */
+  background: none;
+  color: var(--button-color);
+  border: none;
+}
+
+/* Size modifiers – adjust padding to match Polaris’s small, medium, large */
+/* Polaris “slim” (small) uses ~6px vertical padding and 12px horizontal:contentReference[oaicite:15]{index=15} */
+.custom-button--small {
+  padding: 0.5rem 0.6rem;
+  font-size: 0.8rem; /* Optionally slightly smaller font for small, if needed */
+}
+/* Polaris default (medium) uses more padding for ~36px height */
+.custom-button--medium {
+  padding: 0.6rem 0.6rem;
+}
+/* Large buttons have extra padding for emphasis */
+.custom-button--large {
+  padding: 14px 20px;
+  font-size: 1.1rem; /* Optionally slightly larger font for large */
+}
+
+/* Hover state – lighten background or add hover effect */
+.custom-button:hover:not(:disabled) {
+  /* For primary variant, increase brightness slightly; for secondary, add subtle bg */
+  filter: brightness(1.10);
+}
+/* Active state – pressed effect (slightly darken) */
+.custom-button:active:not(:disabled) {
+  filter: brightness(0.90);
+}
+/* Disabled state – greyed out styles */
+.custom-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  /* For outline/secondary, dull the border and text as well */
+  border-color: #bbb;
+}
+.custom-button--primary:disabled {
+  background-color: #f0f0f0; /* light grey background */
+  color: #bbb;
+}
+.custom-button--secondary:disabled {
+  background-color: #fff;
+  border-color: #ddd;
+  color: #ccc;
+}
+.custom-button--plain:disabled {
+  color: #999;
+  text-decoration: none;
+}

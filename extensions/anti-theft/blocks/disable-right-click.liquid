@@ -1,0 +1,23 @@
+<script>
+  // Prevent right-click on desktop
+  document.addEventListener('contextmenu', event => event.preventDefault());
+  
+  // Prevent touch actions on mobile
+  document.addEventListener('touchstart', event => {
+    if (event.touches.length > 1) {
+      event.preventDefault();
+    }
+  }, { passive: false });
+  
+  document.addEventListener('touchend', event => {
+    event.preventDefault();
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Disable Right Click",
+    "target": "head",
+    "settings": []
+  }
+{% endschema %}

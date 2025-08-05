@@ -1,0 +1,555 @@
+{
+  "AppData": {
+    "General": {
+      "Updating": "Aggiornamento",
+      "Stopping": "Blocco", 
+      "Updated": "Aggiornato"
+    },
+    "HeaderCard": {
+      "stopAndRestore": "Arresta e ripristina",
+      "imagesProcessed": "Immagini elaborate", 
+      "totalImages": "Immagini totali", 
+      "clickStart": "Clicca qui per iniziare",
+      "publishUpdates": "Pubblica aggiornamenti",
+      "activate": "Attiva",
+      "activating": "Attivando",
+      "welcome": "Benvenuto",
+      "limitedMsg": "Aggiorna per usare (hai troppe immagini)",
+      "failedMsg": "Elaborazione delle immagini fallita. Per favore, riprova o contatta il supporto.",
+      "completedMsg": "Tutte le immagini sono state elaborate.",
+      "completedSuccessfully": "Completato con successo",
+      "lastUpdated": "Ultimo aggiornamento alle",
+      "processingMsg": "Lo stato verrà aggiornato al completamento", 
+      "apply": "Applica",
+      "restore": "Ripristina",
+      "processing": "In elaborazione",
+      "restoring": "Ripristinando"
+    },
+    "SettingsCard": {
+      "settings": "Impostazioni",
+      "featuredOnly": "Applica solo sull’immagine in evidenza",
+      "autoApply": "Applicazione automatica sulle nuove immagini",
+      "testNote": "Nota: Si consiglia di testarlo su determinati prodotti prima di applicarlo su tutti i prodotti",
+      "selectProducts": "Seleziona i prodotti",
+      "selectCollections": "Seleziona le collezioni",
+      "selected": "Selezionato",
+      "clear": "Pulisci",
+      "applySelectedProducts": "Applicare sui prodotti selezionati",
+      "applySelectedCollections": "Applicare su collezioni selezionate",
+      "applyAll": "Applicare su tutti i prodotti esistenti"
+    },
+    "OptimisationCard": {
+      "title": "Ottimizza e comprimi",
+      "compression": "Compressione",
+      "min": "Minimo",
+      "max": "Massimo",
+      "setToDefault": "Imposta su predefinito"
+    },
+    "WatermarkCard": {
+      "title": "Applica filigrana",
+      "watermarkType": "Tipo di filigrana",
+      "watermarkImage": "Immagine della filigrana",
+      "opacity": "Trasparenza",
+      "imageWidth": "Larghezza dell’immagine",
+      "fontStyle": "Stile del carattere",
+      "fontSize": "Grandezza del carattere",
+      "textInput": "Inserimento del testo",
+      "gridMode": "Modalità griglia",
+      "gridEnabled": "Abilita la griglia della filigrana",
+      "gridRotated": "Abilita la rotazione della griglia ",
+      "placement": "Posizionamento"
+    },
+    "AltTextCard": {
+      "overwrite": "Sovrascrivi il testo alternativo. Seleziona questa opzione per applicare il testo alternativo su tutte le immagini e rimuovere il testo precedente, se lasciato deselezionato verranno modificate solo le immagini senza testo alternativo.",
+      "reset": "Imposta su predefinito"
+    },
+    "PreviewForm": {
+      "fontSize": {
+        "small": "Piccolo",
+        "medium": "Medio",
+        "large": "Grande",
+        "xlarge": "Molto grande"
+      },
+      "fontStyle": {
+        "basic": "Base",
+        "cursive": "Corsivo",
+        "print": "Stampa",
+        "classic": "Classico"
+      },
+      "optionsType": {
+        "text": "Testo",
+        "image": "Immagine"
+      },
+      "optionsPlacement": {
+        "centerCenter": "Centro",
+        "centerRight": "Centro destra",
+        "centerLeft": "Centro sinistra",
+        "topCenter": "Centro in alto",
+        "topRight": "In alto a destra",
+        "topLeft": "In alto a sinistra",
+        "bottomCenter": "In basso in centro",
+        "bottomRight": "In basso a destra",
+        "bottomLeft": "In basso a sinistra"
+      }
+    },
+    "PreviewCard": {
+      "title": "Anteprima",
+      "changePreviewProduct": "Cambia anteprima prodotto",
+      "selectProduct": "Seleziona prodotto",
+      "selectProductLong": "Seleziona un prodotto per visualizzare l’anteprima",
+      "original": "Originale",
+      "compressed": "Compresso"
+    },
+    "HelpCard": {
+      "needHelp": "Hai bisogno di aiuto?",
+      "freeSetup": "Assistenza gratuita per la configurazione",
+      "reachOut": "Contatta il nostro supporto e ti aiuteremo con la personalizzazione del widget, il posizionamento, l’integrazione del carrello a scomparsa o qualsiasi altra domanda",
+      "liveChat": "Chat in tempo reale",
+      "liveChatMsg": "Supporto via chat dal vivo 24/7, risposte e assistenza immediata",
+      "chatNow": "Chatta ora",
+      "email": "Supporto via email",
+      "emailMsg": "La tua email verrà trattata generalmente entro 12 - 24 ore",
+      "sendEmail": "Manda email"
+    },
+    "FAQ": {
+      "title": "Domande frequenti",
+      "questions": [
+        { 
+          "question": "Che cos’è una filigrana", 
+          "answer": "Una filigrana è un testo o un’immagine sovrapposti a una foto per proteggerla da un utilizzo non autorizzato" 
+        },
+        { 
+          "question": "Come posso applicare una filigrana alla mie immagini?", 
+          "answer": "Puoi applicare una filigrana selezionando il tipo di filigrana, regolando le impostazioni e cliccando su " 
+        },
+        {
+          "question": "Posso personalizzare il testo e lo stile della filigrana?", 
+          "answer": "Si, puoi personalizzare il testo, lo stile del font, la dimensione, l’opacità e la posizione della filigrana" }
+        ,
+        { 
+          "question": "Come posso cambiare la posizione della filigrana sulle mie immagini?", 
+          "answer": "Puoi cambiare la posizione selezionando l’opzione desiderata nelle impostazioni della filigrana." 
+        },
+        { 
+          "question": "Posso usare un’immagine come filigrana invece del testo?", 
+          "answer": "Si, puoi caricare un’immagine da usare come filigrana dopo aver selezionato il tipo di filigrana come immagine." 
+        },
+        { 
+          "question": "Come posso regolare la trasparenza della filigrana?", 
+          "answer": "Puoi regolare la trasparenza utilizzando il cursore nelle impostazioni della filigrana." 
+        },
+        { 
+          "question": "È possibile applicare filigrane in massa a più immagini?",
+          "answer": "Sì, puoi applicare filigrane in massa selezionando più immagini e applicando le impostazioni della filigrana." 
+        },
+        { "question": "Posso visualizzare in anteprima la filigrana prima di applicarla?", "answer": "Sì, puoi visualizzare in anteprima la filigrana facendo clic sul pulsante 'Anteprima'." },
+        { "question": "Come posso rimuovere una filigrana da un'immagine?", "answer": "Puoi rimuovere una filigrana selezionando l'immagine e cliccando sul pulsante 'Rimuovi filigrana'." },
+        { "question": "Cosa devo fare se la filigrana non appare correttamente?", "answer": "Assicurati che le impostazioni della filigrana siano corrette e prova a rimuovere e applicare di nuovo la filigrana. Se il problema persiste, contatta il supporto." }
+      ]
+    },
+    "ChargeCard":{
+      "title": "Accetta i costi dell'app",
+      "acceptCharges": "Accetta i costi",
+      "skipCharges": "Voglio elaborare solo 50 immagini",
+      "p1": "Per favore, accetta i costi per continuare a usare l'app..",
+      "ul1": "5 dollari al mese per ogni 10.000 immagini.",
+      "ul2": "Effettuiamo il backup di tutte le immagini in modo che tu possa ripristinarle in qualsiasi momento.",
+      "ul3": "Le prime 50 immagini sono gratuite.",
+      "p2": "Ricarica la pagina se hai già accettato i costi."
+    }
+  },
+  "Polaris": {
+    "ActionMenu": {
+      "Azioni": {
+        "moreActions": "Altre azioni"
+      },
+      "RollupActions": {
+        "rollupButton": "Vedi azioni"
+      }
+    },
+    "Avatar": {
+      "label": "Avatar",
+      "labelWithInitials": "Avatar con iniziali {initials}"
+    },
+    "Autocomplete": {
+      "spinnerAccessibilityLabel": "Caricamento",
+      "ellipsis": "{content}…"
+    },
+    "Badge": {
+      "PROGRESS_LABELS": {
+        "incomplete": "Incompleto",
+        "partiallyComplete": "Parzialmente completo",
+        "complete": "Completo"
+      },
+      "STATUS_LABELS": {
+        "info": "Informazioni",
+        "success": "Successo",
+        "warning": "Attenzione",
+        "critical": "Critico",
+        "attention": "Attenzione",
+        "new": "Nuovo",
+        "readOnly": "Sola lettura",
+        "enabled": "Abilitato"
+      },
+      "progressAndStatus": "{statusLabel} {progressLabel}"
+    },
+    "Banner": {
+      "dismissButton": "Ignora la notifica"
+    },
+    "Button": {
+      "spinnerAccessibilityLabel": "Caricamento",
+      "connectedDisclosureAccessibilityLabel": "Azioni correlate"
+    },
+    "Common": {
+      "checkbox": "Casella di controllo",
+      "undo": "Annulla",
+      "cancel": "Interrompere",
+      "clear": "Svuota",
+      "close": "Chiudere",
+      "submit": "Inviare",
+      "more": "Altro"
+    },
+    "ContextualSaveBar": {
+      "save": "Salva",
+      "discard": "Scartare"
+    },
+    "DataTable": {
+      "sortAccessibilityLabel": "Ordina{direction} per",
+      "navAccessibilityLabel": "Scorrere la tabella {direction} su una colonna",
+      "totalsRowHeading": "Totali",
+      "totalRowHeading": "Totale"
+    },
+    "DatePicker": {
+      "previousMonth": "Mostra il mese precedente, {previousMonthName} {showPreviousYear}",
+      "nextMonth": "Mostra il mese successivo, {nextMonth} {nextYear}",
+      "today": "Oggi ",
+      "start": "Inizio della gamma",
+      "end": "Fine della gamma",
+      "months": {
+        "january": "Gennaio",
+        "february": "Febbraio",
+        "march": "Marzo",
+        "april": "Aprile",
+        "may": "Maggio",
+        "june": "Giugno",
+        "july": "Luglio",
+        "august": "Agosto",
+        "september": "Settembre",
+        "october": "Ottobre",
+        "november": "Novembre",
+        "december": "Dicembre"
+      },
+      "days": {
+        "monday": "Lunedi",
+        "tuesday": "Martedi",
+        "wednesday": "Mercoledi",
+        "thursday": "Giovedi",
+        "friday": "Venerdi",
+        "saturday": "Sabato",
+        "sunday": "Domenica"
+      },
+      "daysAbbreviated": {
+        "monday": "Lu",
+        "tuesday": "Ma",
+        "wednesday": "Me",
+        "thursday": "Gio",
+        "friday": "Ve",
+        "saturday": "Sa",
+        "sunday": "Do"
+      }
+    },
+    "DiscardConfirmationModal": {
+      "title": "Scartare tutte le modifiche non salvate",
+      "message": "Se ignori le modifiche, eliminerai tutte le modifiche apportate dall'ultima volta che hai salvato.",
+      "primaryAction": "Scartare le modifiche",
+      "secondaryAction": "Continuare l’elaborazione"
+    },
+    "DropZone": {
+      "single": {
+        "overlayTextFile": "Rilasciare il file da caricare",
+        "overlayTextImage": "Rilasciare l'immagine da caricare",
+        "overlayTextVideo": "Rilasciare il video da caricare",
+        "actionTitleFile": "Aggiungi documento",
+        "actionTitleImage": "Aggiungi immagine",
+        "actionTitleVideo": "Aggiungi video",
+        "actionHintFile": "o rilascia il documento da caricare",
+        "actionHintImage": "o rilascia l'immagine da caricare",
+        "actionHintVideo": "o rilascia  il video da caricare",
+        "labelFile": "Carica il documento",
+        "labelImage": "Carica l’immagine",
+        "labelVideo": "Carica il video"
+      },
+      "allowMultiple": {
+        "overlayTextFile": "Rilasciare i documenti da caricare",
+        "overlayTextImage": "Rilasciare le immagini da caricare",
+        "overlayTextVideo": "Rilasciare i video da caricare",
+        "actionTitleFile": "Aggiungi documenti",
+        "actionTitleImage": "Aggiungi immagini",
+        "actionTitleVideo": "Aggiungi video",
+        "actionHintFile": "o rilascia i documenti da caricare",
+        "actionHintImage": "o rilascia le immagini da caricare",
+        "actionHintVideo": "o rilascia i video da caricare",
+        "labelFile": "Caricare i documenti",
+        "labelImage": "Caricare le immagini",
+        "labelVideo": "Caricare i video"
+      },
+      "errorOverlayTextFile": "Il tipo di file non è valido",
+      "errorOverlayTextImage": "Il tipo di immagine non è valido",
+      "errorOverlayTextVideo": "Il tipo di video non è valido"
+    },
+    "EmptySearchResult": {
+      "altText": "Risultati di ricerca vuoti"
+    },
+    "Frame": {
+      "skipToContent": "Vai al contenuto",
+      "navigationLabel": "Navigazione",
+      "Navigation": {
+        "closeMobileNavigationLabel": "Chiudere la navigazione"
+      }
+    },
+    "FullscreenBar": {
+      "back": "Indietro",
+      "accessibilityLabel": "Uscire dalla modalità a schermo intero"
+    },
+    "Filters": {
+      "moreFilters": "Più filtri",
+      "moreFiltersWithCount": "Più filtri ({count})",
+      "filter": "Filtri {resourceName}",
+      "noFiltersApplied": "Nessun filtro applicato",
+      "cancel": "Cancella",
+      "done": "Fatto",
+      "clearAllFilters": "Cancella tutti i filtri",
+      "clear": "Pulisci",
+      "clearLabel": "Pulisci {filterName}",
+      "addFilter": "Aggiungi filtro",
+      "clearFilters": "Pulisci tutti"
+    },
+    "FilterPill": {
+      "clear": "Pulisci"
+    },
+    "IndexFilters": {
+      "searchFilterTooltip": "Cerca e filtra (F)",
+      "searchFilterAccessibilityLabel": "Risultati di ricerca e filtro",
+      "sort": "Ordina i risultati",
+      "addView": "Aggiungi una nuova vista",
+      "newView": "Ricerca personalizzata",
+      "SortButton": {
+        "ariaLabel": "Ordina i risultati",
+        "tooltip": "Ordina",
+        "title": "Ordina per",
+        "sorting": {
+          "asc": "Crescente",
+          "desc": "Discendente",
+          "az": "A-Z",
+          "za": "Z-A"
+        }
+      },
+      "UpdateButtons": {
+        "cancel": "Interrompere",
+        "update": "Aggiorna",
+        "save": "Salva",
+        "saveAs": "Salva come",
+        "modal": {
+          "title": "Salva visualizzazione come",
+          "label": "Nome",
+          "sameName": "Una vista con questo nome esiste già. Scegli un nome diverso, per favore..",
+          "save": "Salva",
+          "cancel": "Interrompere"
+        }
+      }
+    },
+    "IndexProvider": {
+      "defaultItemSingular": "Elemento",
+      "defaultItemPlural": "Elementi",
+      "allItemsSelected": "Tutti {itemsLength}+ {resourceNamePlural} sono selezionati",
+      "selected": "{selectedItemsCount} selezionato",
+      "a11yCheckboxDeselectAllSingle": "Deseleziona {resourceNameSingular}",
+      "a11yCheckboxSelectAllSingle": "Seleziona {resourceNameSingular}",
+      "a11yCheckboxDeselectAllMultiple": "Deseleziona tutti {itemsLength} {resourceNamePlural}",
+      "a11yCheckboxSelectAllMultiple": "Seleziona tutti{itemsLength} {resourceNamePlural}"
+    },
+    "IndexTable": {
+      "emptySearchTitle": "Non {resourceNamePlural} trovato",
+      "emptySearchDescription": "Prova a modificare i filtri o il termine di ricerca",
+      "onboardingBadgeText": "Nuovo",
+      "resourceLoadingAccessibilityLabel": "Caricamento {resourceNamePlural}…",
+      "selectAllLabel": "Seleziona tutti {resourceNamePlural}",
+      "selected": "{selectedItemsCount} selezionato",
+      "undo": "Annulla",
+      "selectAllItems": "Seleziona tutti {itemsLength}+ {resourceNamePlural}",
+      "selectItem": "Seleziona {resourceName}",
+      "selectButtonText": "Seleziona",
+      "sortAccessibilityLabel": "ordina {direction} per"
+    },
+    "Loading": {
+      "label": "Barra di caricamento della pagina"
+    },
+    "Modal": {
+      "iFrameTitle": "codifica del corpo",
+      "modalWarning": "Queste proprietà richieste mancano dal Modal: {missingProps}"
+    },
+    "Page": {
+      "Header": {
+        "rollupActionsLabel": "Visualizza azioni per {title}"
+      }
+    },
+    "Pagination": {
+      "previous": "Precedente",
+      "next": "Avanti",
+      "pagination": "Impaginazione"
+    },
+    "ProgressBar": {
+      "negativeWarningMessage": "I valori passati alla pedina di avanzamento non dovrebbero essere negativi. Ripristino in corso {progress} da 0.",
+      "exceedWarningMessage": "I valori passati alla pedina di progresso non dovrebbero superare 100. Impostazione in corso{progress} a 100."
+    },
+    "ResourceList": {
+      "sortingLabel": "Ordina per",
+      "defaultItemSingular": "elemento",
+      "defaultItemPlural": "elementi",
+      "showing": "Mostrando {itemsCount} {resource}",
+      "showingTotalCount": "Mostrando {itemsCount} of {totalItemsCount} {resource}",
+      "loading": "Caricamento {resource}",
+      "selected": "{selectedItemsCount} selezionato",
+      "allItemsSelected": "Tutti {itemsLength}+ {resourceNamePlural} nel tuo negozio sono selezionati",
+      "allFilteredItemsSelected": "Tutti {itemsLength}+ {resourceNamePlural} in questo filtro sono selezionati",
+      "selectAllItems": "Seleziona tutti {itemsLength}+ {resourceNamePlural} inel tuo negozio",
+      "selectAllFilteredItems": "Seleziona tutti {itemsLength}+ {resourceNamePlural} in questo filtro",
+      "emptySearchResultTitle": "Non {resourceNamePlural} trovato",
+      "emptySearchResultDescription": "Prova a cambiare i filtri o il termine di ricerca",
+      "selectButtonText": "Select",
+      "a11yCheckboxDeselectAllSingle": "Deseleziona{resourceNameSingular}",
+      "a11yCheckboxSelectAllSingle": "Seleziona {resourceNameSingular}",
+      "a11yCheckboxDeselectAllMultiple": "Deseleziona tutti {itemsLength} {resourceNamePlural}",
+      "a11yCheckboxSelectAllMultiple": "Seleziona tutti {itemsLength} {resourceNamePlural}",
+      "Item": {
+        "actionsDropdownLabel": "Azioni per {accessibilityLabel}",
+        "actionsDropdown": "Azioni a discesa",
+        "viewItem": "Visualizzare i dettagli per {itemName}"
+      },
+      "BulkActions": {
+        "actionsActivatorLabel": "Azioni",
+        "moreActionsActivatorLabel": "Più azioni",
+        "warningMessage": "Per fornire una migliore esperienza utente. Ci dovrebbe essere solo un massimo di {maxPromotedActions} azioni promosse."
+      }
+    },
+    "SkeletonPage": {
+      "loadingLabel": "Caricamento pagina"
+    },
+    "Tabs": {
+      "newViewAccessibilityLabel": "Crea nuova vista",
+      "newViewTooltip": "Crea vista",
+      "toggleTabsLabel": "Altre viste",
+      "Tab": {
+        "rename": "Rinomina vista",
+        "duplicate": "Duplica vista",
+        "edit": "Modifica vista",
+        "editColumns": "Modifica colonne",
+        "delete": "Elimina vista",
+        "copy": "Copia di {name}",
+        "deleteModal": {
+          "title": "Eliminare la vista?",
+          "description": "Questa azione non può essere annullata. La vista {viewName} non sarà più disponibile nel tuo pannello di amministrazione.",
+          "cancel": "Annulla",
+          "delete": "Elimina vista"
+        }
+      },
+      "RenameModal": {
+        "title": "Rinomina vista",
+        "label": "Nome",
+        "cancel": "Annulla",
+        "create": "Salva",
+        "errors": {
+          "sameName": "Esiste già una vista con questo nome. Scegli un nome diverso."
+        }
+      },
+      "DuplicateModal": {
+        "title": "Duplica vista",
+        "label": "Nome",
+        "cancel": "Annulla",
+        "create": "Crea vista",
+        "errors": {
+          "sameName": "Esiste già una vista con questo nome. Scegli un nome diverso."
+        }
+      },
+      "CreateViewModal": {
+        "title": "Crea una nuova vista",
+        "label": "Nome",
+        "cancel": "Annulla",
+        "create": "Crea vista",
+        "errors": {
+          "sameName": "Esiste già una vista con questo nome. Scegli un nome diverso."
+        }
+      }
+    },
+    "Tag": {
+      "ariaLabel": "Rimuovi {children}"
+    },
+    "TextField": {
+      "characterCount": "{count} caratteri",
+      "characterCountWithMaxLength": "{count} di {limit} caratteri utilizzati"
+    },
+    "TooltipOverlay": {
+      "accessibilityLabel": "Suggerimento: {label}"
+    },
+    "TopBar": {
+      "toggleMenuLabel": "Menu a discesa",
+      "SearchField": {
+        "clearButtonLabel": "Pulisci",
+        "search": "Cerca"
+      }
+    },
+    "MediaCard": {
+      "dismissButton": "Annulla",
+      "popoverButton": "Azioni"
+    },
+    "VideoThumbnail": {
+      "playButtonA11yLabel": {
+        "default": "Play video",
+        "defaultWithDuration": "Riproduci video della durata di {duration}",
+        "duration": {
+          "hours": {
+            "other": {
+              "only": "{hourCount} ore",
+              "andMinutes": "{hourCount} ore e {minuteCount} minuti",
+              "andMinute": "{hourCount} hours and {minuteCount} minute",
+              "minutesAndSeconds": "{hourCount} ore, {minuteCount} minuti , e {secondCount} secondi",
+              "minutesAndSecond": "{hourCount} ore, {minuteCount} minuti, e {secondCount} secondi",
+              "minuteAndSeconds": "{hourCount} ore, {minuteCount} minuti, e {secondCount} secondi",
+              "minuteAndSecond": "{hourCount} ore, {minuteCount} minuti, e {secondCount} secondi",
+              "andSeconds": "{hourCount} ore e {secondCount} secondi",
+              "andSecond": "{hourCount} ore e  {secondCount} secondi"
+            },
+            "one": {
+              "only": "{hourCount} ore",
+              "andMinutes": "{hourCount} ore e {minuteCount} minuti",
+              "andMinute": "{hourCount} ore e {minuteCount} minuti",
+              "minutesAndSeconds": "{hourCount} ore, {minuteCount} minuti, e {secondCount} secondi",
+              "minutesAndSecond": "{hourCount} ore, {minuteCount} minuti, e {secondCount} secondi",
+              "minuteAndSeconds": "{hourCount} ore, {minuteCount} minuti, e {secondCount} secondi",
+              "minuteAndSecond": "{hourCount} ore, {minuteCount} minuti, e {secondCount} secondi",
+              "andSeconds": "{hourCount} ore e {secondCount} secondi",
+              "andSecond": "{hourCount} ore e {secondCount} secondi"
+            }
+          },
+          "minutes": {
+            "other": {
+              "only": "{minuteCount} minuti",
+              "andSeconds": "{minuteCount} minuti e {secondCount} secondi",
+              "andSecond": "{minuteCount} minuti e {secondCount} secondi"
+            },
+            "one": {
+              "only": "{minuteCount} minuti",
+              "andSeconds": "{minuteCount} minuti e {secondCount} secondi",
+              "andSecond": "{minuteCount} minute and {secondCount} second"
+            }
+          },
+          "seconds": {
+            "other": "{secondCount} secondi",
+            "one": "{secondCount} secondi"
+          }
+        }
+      }
+    }
+  }
+}
+

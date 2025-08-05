@@ -1,0 +1,28 @@
+client_id = "101788b0d255dbcf49ca90c5e287672a"
+name = "ImageArmor"
+handle = "imagearmor"
+application_url = "https://imagearmor.gadget.app"
+embedded = true
+
+[build]
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,write_products"
+
+[auth]
+redirect_urls = [
+  "https://imagearmor--development.gadget.app/api/connections/auth/shopify/callback",
+  "https://imagearmor.gadget.app/api/connections/auth/shopify/callback"
+]
+
+[webhooks]
+api_version = "2025-04"
+
+  [[webhooks.subscriptions]]
+  uri = "https://imagearmor.gadget.app/api/webhooks/shopify"
+  compliance_topics = [ "customers/redact", "customers/data_request", "shop/redact" ]
+
+[pos]
+embedded = false

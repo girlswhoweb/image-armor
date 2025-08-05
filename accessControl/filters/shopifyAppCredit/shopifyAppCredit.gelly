@@ -1,0 +1,5 @@
+
+fragment Filter($session: Session) on ShopifyAppCredit {
+  *
+  [where shopId == $session.shopId]
+}

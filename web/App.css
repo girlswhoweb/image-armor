@@ -1,0 +1,9 @@
+.preview-empty > div {
+  padding: 20px 0 0 0 !important;
+}
+
+.d-blocked{
+  pointer-events: none;
+  opacity: 0.5;
+}
+
