@@ -112,14 +112,17 @@
       "sendEmail": "Send Email"
     },
     "ChargeCard": {
-      "title": "Accepter app-gebyrer",
-      "acceptCharges": "Accepter gebyrer",
-      "skipCharges": "Jeg vil kun behandle 50 billeder",
-      "p1": "Accepter venligst gebyrerne for at fortsætte med at bruge appen.",
-      "ul1": "5 $ pr. måned for hver 10 000 billeder.",
-      "ul2": "Vi sikkerhedskopierer alle billeder, så du kan gendanne dem når som helst.",
-      "ul3": "De første 50 billeder er gratis.",
-      "p2": "Opdater siden, hvis du allerede har accepteret gebyrerne."
+      "title": "Vælg din plan",
+      "acceptCharges": "Accepter betaling",
+      "skipCharges": "Fortsæt med 50 gratis billeder",
+      "trial": "Prøv for $1",
+      "trialUsed": "Prøveperiode allerede brugt. Opgrader til Pro for at fortsætte.",
+      "proPlan": "Vælg Pro-plan",
+      "p1": "Vælg et abonnementsplan for at fortsætte med at bruge appen.",
+      "ul1": "Starter: $1 for 7-dages prøve (maks. 50 billeder)",
+      "ul2": "Pro: $14/md for ubegrænsede billeder",
+      "ul3": "Vi sikkerhedskopierer alle billeder, så du kan gendanne dem når som helst.",
+      "p2": "Opdater siden, hvis du allerede har accepteret en plan."
     }
   },
   "Polaris": {

@@ -112,15 +112,18 @@
       "sendEmail": "E-Mail senden"
     },
     "ChargeCard": {
-      "title": "App-Gebühren akzeptieren",
-      "acceptCharges": "Gebühren akzeptieren",
-      "skipCharges": "Ich möchte nur 50 Bilder verarbeiten",
-      "p1": "Bitte akzeptieren Sie die Gebühren, um die App weiterhin zu nutzen.",
-      "ul1": "5 $ pro Monat für jeweils 10 000 Bilder.",
-      "ul2": "Wir sichern alle Bilder, damit Sie sie jederzeit wiederherstellen können.",
-      "ul3": "Die ersten 50 Bilder sind kostenlos.",
-      "p2": "Aktualisieren Sie die Seite, wenn Sie die Gebühren bereits akzeptiert haben."
-    }
+      "title": "Wähle deinen Plan",
+      "acceptCharges": "Kosten akzeptieren",
+      "skipCharges": "Mit 50 kostenlosen Bildern fortfahren",
+      "trial": "Teste für $1",
+      "trialUsed": "Testversion bereits verwendet. Auf Pro upgraden, um fortzufahren.",
+      "proPlan": "Pro-Plan wählen",
+      "p1": "Bitte wähle ein Abonnement, um die App weiter zu nutzen.",
+      "ul1": "Starter: $1 für 7-tägige Testversion (max. 50 Bilder)",
+      "ul2": "Pro: $14/Monat für unbegrenzte Bilder",
+      "ul3": "Wir sichern alle Bilder, sodass du sie jederzeit wiederherstellen kannst.",
+      "p2": "Aktualisiere die Seite, wenn du bereits einen Plan akzeptiert hast."
+    }   
   },
   "Polaris": {
     "Avatar": {

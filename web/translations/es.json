@@ -112,14 +112,17 @@
       "sendEmail": "Enviar Email"
     },
     "ChargeCard": {
-      "title": "Aceptar cargos de la aplicación",
+      "title": "Elige tu plan",
       "acceptCharges": "Aceptar cargos",
-      "skipCharges": "Quiero procesar solo 50 imágenes",
-      "p1": "Por favor, acepte los cargos para continuar usando la aplicación.",
-      "ul1": "5 $ por mes por cada 10 000 imágenes.",
-      "ul2": "Hacemos una copia de seguridad de todas las imágenes para que pueda restaurarlas en cualquier momento.",
-      "ul3": "Las primeras 50 imágenes son gratis.",
-      "p2": "Actualice la página si ya ha aceptado los cargos."
+      "skipCharges": "Continuar con 50 imágenes gratis",
+      "trial": "Pruébalo por $1",
+      "trialUsed": "Prueba ya utilizada. Actualiza a Pro para continuar.",
+      "proPlan": "Elegir plan Pro",
+      "p1": "Selecciona un plan de suscripción para continuar usando la aplicación.",
+      "ul1": "Starter: $1 por prueba de 7 días (máx. 50 imágenes)",
+      "ul2": "Pro: $14/mes para imágenes ilimitadas",
+      "ul3": "Hacemos copias de seguridad de todas las imágenes para que puedas restaurarlas en cualquier momento.",
+      "p2": "Actualiza la página si ya has aceptado un plan."
     }
   },
   "Polaris": {

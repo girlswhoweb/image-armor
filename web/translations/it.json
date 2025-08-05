@@ -147,16 +147,19 @@
         { "question": "Cosa devo fare se la filigrana non appare correttamente?", "answer": "Assicurati che le impostazioni della filigrana siano corrette e prova a rimuovere e applicare di nuovo la filigrana. Se il problema persiste, contatta il supporto." }
       ]
     },
-    "ChargeCard":{
-      "title": "Accetta i costi dell'app",
-      "acceptCharges": "Accetta i costi",
-      "skipCharges": "Voglio elaborare solo 50 immagini",
-      "p1": "Per favore, accetta i costi per continuare a usare l'app..",
-      "ul1": "5 dollari al mese per ogni 10.000 immagini.",
-      "ul2": "Effettuiamo il backup di tutte le immagini in modo che tu possa ripristinarle in qualsiasi momento.",
-      "ul3": "Le prime 50 immagini sono gratuite.",
-      "p2": "Ricarica la pagina se hai già accettato i costi."
-    }
+    "ChargeCard": {
+      "title": "Scegli il tuo piano",
+      "acceptCharges": "Accetta addebiti",
+      "skipCharges": "Continua con 50 immagini gratuite",
+      "trial": "Provalo per $1",
+      "trialUsed": "Prova già utilizzata. Passa a Pro per continuare.",
+      "proPlan": "Scegli il piano Pro",
+      "p1": "Seleziona un piano di abbonamento per continuare a usare l'app.",
+      "ul1": "Starter: $1 per prova di 7 giorni (max 50 immagini)",
+      "ul2": "Pro: $14/mese per immagini illimitate",
+      "ul3": "Eseguiamo il backup di tutte le immagini per poterle ripristinare in qualsiasi momento.",
+      "p2": "Aggiorna la pagina se hai già accettato un piano."
+  }
   },
   "Polaris": {
     "ActionMenu": {
