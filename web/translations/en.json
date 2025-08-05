@@ -147,15 +147,18 @@
         { "question": "What should I do if the watermark is not appearing correctly?", "answer": "Ensure that the watermark settings are correct and try reapplying the watermark. If the issue persists, contact support." }
       ]
     },
-    "ChargeCard":{
-      "title": "Accept App Charges",
+    "ChargeCard": {
+      "title": "Choose Your Plan",
       "acceptCharges": "Accept Charges",
-      "skipCharges": "I want to process 50 images only",
-      "p1": "Please accept the charges to continue using the app.",
-      "ul1": "$5 per month for every 10000 images.",
-      "ul2": "We backup all images so you can restore at any point.",
-      "ul3": "First 50 images are free.",
-      "p2": "Refresh the page if your have already accepted the charges."
+      "skipCharges": "Continue with 50 Free Images",
+      "trial": "Try it for $1",
+      "trialUsed": "Trial already used. Upgrade to Pro to continue.",
+      "proPlan": "Choose Pro Plan",
+      "p1": "Please select a subscription plan to continue using the app.",
+      "ul1": "Starter: $1 for 7-day trial (50 images max)",
+      "ul2": "Pro: $14/month for unlimited images",
+      "ul3": "We backup all images so you can restore at any time.",
+      "p2": "Refresh the page if you have already accepted a plan."
     }
   },
   "Polaris": {

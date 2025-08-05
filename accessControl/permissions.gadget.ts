@@ -146,6 +146,14 @@ export const permissions: GadgetPermissions = {
             update: true,
           },
         },
+        shopifyAppPurchaseOneTime: {
+          read: true,
+          actions: {
+            create: true,
+            delete: true,
+            update: true,
+          },
+        },
         shopifyAppSubscription: {
           read: true,
           actions: {
@@ -196,6 +204,7 @@ export const permissions: GadgetPermissions = {
       actions: {
         bulkMediaUpdate: true,
         chargeShop: true,
+        expireStarterPlans: true,
         globalShopifySync: true,
         migrate: true,
         ping: true,

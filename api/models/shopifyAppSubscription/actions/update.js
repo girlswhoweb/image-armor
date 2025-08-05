@@ -12,24 +12,22 @@ export async function run({ params, record, logger, api, connections }) {
 /**
  * @param { UpdateShopifyAppSubscriptionActionContext } context
  */
-export async function onSuccess({ params, record, logger, api, connections }) {
-  // If all plans are cancelled, set isPaidUser to false
+export async function onSuccess({ record, api }) {
   const anyActivePlan = await api.shopifyAppSubscription.maybeFindFirst({
-    filter:{
-      status: {
-        equals: "ACTIVE"
-      }
-    }
+    filter: { status: { equals: "ACTIVE" } }
   });
-  if(!anyActivePlan){
-    const shopSettings = await api.shopSettings.findByShopId(record.shopId);
-    if(shopSettings){
-      await api.shopSettings.update(shopSettings.id, {
-        isPaidUser: false
-      });
-    }
+
+  const shopSettings = await api.shopSettings.findByShopId(record.shopId);
+  if (!shopSettings) return;
+
+  if (!anyActivePlan) {
+    await api.shopSettings.update(shopSettings.id, {
+      isPaidUser: false,
+      starterPlanUser: false
+    });
   }
-};
+}
+
 
 /** @type { ActionOptions } */
 export const options = {

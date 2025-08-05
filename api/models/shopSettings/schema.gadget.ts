@@ -100,5 +100,15 @@ export const schema: GadgetModel = {
       storageKey:
         "ModelField-nCRUvqL6o3q8::FieldStorageEpoch-YGmTT1kZ-noF",
     },
+    starterPlanStartDate: {
+      type: "dateTime",
+      includeTime: true,
+      storageKey: "S9Y-lvljYYJU",
+    },
+    starterPlanUser: {
+      type: "boolean",
+      default: false,
+      storageKey: "qbG5aQhFxOGn",
+    },
   },
 };

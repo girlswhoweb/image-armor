@@ -23,6 +23,22 @@ export async function onSuccess({ params, record, logger, api, connections }) {
   const activeSettings = shopSettings.activeData;
   const featuredOnly = activeSettings.featuredOnly;
   const processStatus = shopSettings.processStatus
+
+  // Expire starter plan if older than 7 days
+if (shopSettings.starterPlanUser && shopSettings.starterPlanStartDate) {
+  const start = new Date(shopSettings.starterPlanStartDate);
+  const now = new Date();
+  const diffDays = (now - start) / (1000*60*60*24);
+
+  if (diffDays > 7) {
+    await api.shopSettings.update(shopSettings.id, {
+      starterPlanUser: false,
+      isPaidUser: false
+    });
+    console.log("Starter plan expired for shop", shopSettings.shopUrl);
+  }
+}
+
   
   if(!processStatus || (record.id.toString() !== processStatus?.operationId?.replace("gid://shopify/BulkOperation/", "")) || record.status !== "completed") {
     console.log("webhook not matching");
@@ -151,16 +167,6 @@ export async function onSuccess({ params, record, logger, api, connections }) {
         updatedAt: new Date(),
       }
     })
-
-    // Create usages charge based on the number of images if not created already
-    // if(!shopSettings.usageChargeId){
-    //   await api.usageCharge.create(shopSettings.id, {
-    //     usageCharge: {
-    //       shopId: shopSettings.id,
-    //       usageCount: mediaList.length,
-    //     }
-    //   })
-    // }
   }
   
 };
