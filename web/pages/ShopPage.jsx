@@ -1,6 +1,5 @@
 import { useFindFirst } from "@gadgetinc/react";
 import {
-  Badge,
   Banner,
   BlockStack,
   Card,
@@ -9,7 +8,6 @@ import {
   Layout,
   Page,
   Select,
-  // Spinner,
   Text,
   Toast,
 } from "@shopify/polaris";
@@ -25,12 +23,10 @@ import { ResetMinor, WandMinor } from "@shopify/polaris-icons";
 
 import enTranslations from "../translations/en.json";
 import Pricing from "../components/Pricing/index";
-import { ConversationMinor, InviteMinor } from "@shopify/polaris-icons";
 import { useGadget } from "@gadgetinc/react-shopify-app-bridge";
 import { SaveBar, useAppBridge } from "@shopify/app-bridge-react";
 import { useNavigate } from "react-router-dom";
 import HelpCard from "../components/HelpCard";
-import { useCallback } from "react";
 import CustomButton from "../components/Buttons/CustomButton";
 
 const ShopPage = () => {
@@ -102,7 +98,6 @@ const ShopPage = () => {
   useEffect(() => {
     if (!fetching) {
       if (data) {
-        // setIsMigrated(data.isMigrated || true);
         setInitLoad(true);
         setIsActive(data.isActive);
         setIsDifferent(data.isDifferent);
@@ -136,29 +131,12 @@ const ShopPage = () => {
     }
   }, [processStatus, fetching]);
 
-  // To add Tidio Chat
-  // useEffect(() => {
-  //   const script = document.createElement('script');
-  
-  //   script.src = "//code.tidio.co/fbsoxxoxjjvlny3tz1bvris8kpq75z8r.js";
-  //   script.async = true;
-  
-  //   document.body.appendChild(script);
-  
-  //   return () => {
-  //     document.body.removeChild(script);
-  //   }
-  // }, []);
-
   useEffect(() => {
     if (initLoad) {
       setInitLoad(false);
       return;
     }
     console.log("appSettings", appSettings?.isSaved);
-    // if (appSettings?.isSaved !== true) {
-    //   setShowSaveBar();
-    // }
   }, [appSettings]);
 
   const onApply = async ({skipCharge = false}) => {
@@ -253,14 +231,6 @@ const ShopPage = () => {
     setAppSettings({ ...data.data, isSaved: true });
   }
 
-  // return (
-  //   <Page title="App Under Maintenance">
-  //     <Text variant="bodyMd" as="p">
-  //       We will be back soon!
-  //     </Text>
-  //   </Page>
-  // );
-
   return (
     <Page
       title="Add Watermark & Optimise"
@@ -270,13 +240,6 @@ const ShopPage = () => {
           navigate("/");
         }
       }}
-      // primaryAction={{
-      //   content: ["PROCESSING", "UPLOADING"].includes(processStatus?.state?.toUpperCase()) ? `${i18n.translate("AppData.HeaderCard.processing")}...` : i18n.translate("AppData.HeaderCard.apply"),
-      //   icon: <Icon source={WandMinor} />,
-      //   loading: activating,
-      //   disabled: ["PROCESSING"].includes(processStatus?.state?.toUpperCase()),
-      //   onAction: onApply
-      // }}
       secondaryActions={[
         {
           content: ["REMOVING"].includes(processStatus?.state?.toUpperCase()) ? `${i18n.translate("AppData.HeaderCard.restoring")}...` : i18n.translate("AppData.HeaderCard.restore"),
@@ -417,11 +380,6 @@ const ShopPage = () => {
                 </Layout.Section>
               </Layout>
             </Layout.Section>
-            {/* FAQ Section */}
-            {/* <Layout.Section>
-              <FAQ />
-            </Layout.Section> */}
-            {/* Help Section */}
             <Layout.Section>
               <HelpCard />
             </Layout.Section>
