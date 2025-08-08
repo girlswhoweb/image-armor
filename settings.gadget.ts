@@ -6,7 +6,7 @@ export const settings: GadgetSettings = {
   plugins: {
     connections: {
       shopify: {
-        apiVersion: "2025-04",
+        apiVersion: "2025-07",
         enabledModels: [
           "shopifyAppCredit",
           "shopifyAppSubscription",
@@ -14,7 +14,7 @@ export const settings: GadgetSettings = {
           "shopifyBulkOperation",
         ],
         type: "partner",
-        scopes: ["write_products"],
+        scopes: ["write_products", "read_products"],
       },
     },
   },

@@ -48,7 +48,6 @@ setStarterTrialUsed(!!settings?.starterPlanUser);
     <p>{i18n.translate("AppData.ChargeCard.p1")}</p>
     <ul>
       <li>Starter: $1 for 7-day trial (max 50 images)</li>
-      <li>Pro: $14/month for unlimited images</li>
       <li>{i18n.translate("AppData.ChargeCard.ul2")}</li>
       <li>{i18n.translate("AppData.ChargeCard.ul3")}</li>
     </ul>

@@ -27,15 +27,10 @@ export default async function route({ request, reply, api, logger, connections }
     imageUrl = BUCKET_URL + processedImage.originalKey;
   } else {
     product = await shopify.product.get(productId.replace("gid://shopify/Product/", ""))
+    console.log("Fetched product", product);
     imageUrl = product.image.src
   } 
-  // if(altTextEnabled?.toString() === "true") {
-  //   if (!product) {
-  //     product = await shopify.product.get(productId.replace("gid://shopify/Product/", ""))
-  //   }
-  //   // [product_name] - [product_type] by [vendor] - [tags] (limit to 512 chars)
-  //   altText = altFormat.replace("[product_name]", product.title).replace("[product_type]", product.product_type).replace("[vendor]", product.vendor).replace("[tags]", product.tags.join(", ")).substring(0, 512)
-  // }
+
   const image = await generateImage({ source: imageUrl, text: text, type: type, watermark: watermark, layout: layout, rotated: rotated, opacity: opacity, width: width, textColor: textColor, position: position, quality: parseInt(quality, 10), style: style, size: size })
   await reply.status(200)
   .header("original-image", imageUrl)

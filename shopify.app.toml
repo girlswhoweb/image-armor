@@ -1,4 +1,4 @@
-client_id = "101788b0d255dbcf49ca90c5e287672a"
+client_id = "b18b37eadf6426f438f3773c4dd42098"
 name = "ImageArmor"
 handle = "imagearmor"
 application_url = "https://imagearmor.gadget.app"
@@ -18,11 +18,11 @@ redirect_urls = [
 ]
 
 [webhooks]
-api_version = "2025-04"
+api_version = "2025-07"
 
-  [[webhooks.subscriptions]]
-  uri = "https://imagearmor.gadget.app/api/webhooks/shopify"
-  compliance_topics = [ "customers/redact", "customers/data_request", "shop/redact" ]
+[[webhooks.subscriptions]]
+uri = "https://imagearmor.gadget.app/api/webhooks/shopify"
+compliance_topics = [ "customers/redact", "customers/data_request", "shop/redact" ]
 
 [pos]
 embedded = false

@@ -132,7 +132,7 @@ if (shopSettings.starterPlanUser && shopSettings.starterPlanStartDate) {
 
     // Trigger the AWS Step Function
     await sfnClient.startExecution({
-      stateMachineArn: "arn:aws:states:us-east-1:140023387777:stateMachine:WatermarkSteps",
+      stateMachineArn: "arn:aws:states:us-east-1:140023387777:stateMachine:WatermarkSteps-dev",
       name: record.shopId + "-" + record.id,
       input: JSON.stringify({
         shopId: record.shopId,

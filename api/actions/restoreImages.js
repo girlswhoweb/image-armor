@@ -29,7 +29,7 @@ export async function run({ params, logger, api, connections }) {
     }
   });
   lambdaClient.invoke({
-    FunctionName: "watermark-remove",
+    FunctionName: "watermark-remove-dev",
     InvocationType: "Event",
     Payload: JSON.stringify({
       operationId: operationId,

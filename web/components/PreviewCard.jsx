@@ -10,11 +10,6 @@ export default function PreviewCard({ appSettings, setAppSettings }) {
   const [i18n] = useI18n({ id: "AppData"});
   const { appBridge } = useGadget();
 
-  // const [previewProduct, setPreviewProduct] = useState({});
-  // const [imageData, setImageData] = useState({});
-  // const [showPicker, setShowPicker] = useState(false);
-  // const [altText, setAltText] = useState("")
-  // const [sourceImage, setSourceImage] = useState(null);
   const [previewProductId, setPreviewProductId] = useState("");
   const [previewImage, setPreviewImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -93,26 +88,18 @@ export default function PreviewCard({ appSettings, setAppSettings }) {
     // Get Source Image
     const sourceRes = await fetch(sourceUrl);
     if (sourceRes.status === 200) {
-      // const contentType = sourceRes.headers.get("content-type");
-      // const blob = await sourceRes.blob();
-      // const url = URL.createObjectURL(blob);
-      // setSourceImage(url);
       const outputSize = sourceRes.headers.get("content-length");
-      // console.log("outputSize", outputSize);
       setSourceSize(outputSize);
     }
   };
 
   useEffect(() => {
-    onPreview();
-    // if (previewProductId !== "" && appSettings?.isSaved === true) {
-    // } else {
-    //   setLoading(false);
-    // }
+    if (previewProductId) {
+      onPreview();
+      console.log("Previewing for product ID:", previewProductId);
+    }  
   }, [
     previewProductId,
-    // appSettings?.isSaved,
-    // Create a stable dependency array for appSettings
     JSON.stringify(
       Object.fromEntries(
         Object.entries(appSettings || {}).filter(
@@ -134,19 +121,7 @@ export default function PreviewCard({ appSettings, setAppSettings }) {
 
   return (
     <div className="preview-card">
-      <Card
-        // title={previewProductId != "" && i18n.translate("AppData.PreviewCard.title")}
-        // actions={
-        //   previewProductId != ""
-        //     ? [
-        //         {
-        //           content: i18n.translate("AppData.PreviewCard.changePreviewProduct"),
-        //           onAction: onSelection,
-        //         },
-        //       ]
-        //     : []
-        // }
-      >
+      <Card>
       <BlockStack gap="200">
         <InlineGrid columns="1fr auto">
           <Text as="h2" variant="headingSm">
@@ -205,12 +180,6 @@ export default function PreviewCard({ appSettings, setAppSettings }) {
                 }}
               />
             )}
-            {/* {previewProductId != "" && appSettings?.altTextEnabled && (
-              <div style={{ marginTop: "5px" }}>
-                <strong>Alt Text: </strong>
-                {altText}
-              </div>
-            )} */}
           </>
         )}
         {loading && previewProductId != "" && (

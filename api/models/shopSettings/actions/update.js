@@ -30,101 +30,11 @@ export async function onSuccess({ params, record, logger, api, connections }) {
     if (params.shopSettings?.isActive === true) {
       const shopify = connections.shopify.current;
 
-      // ==== Get the product conunt ====
-      // const accessToken = await api.internal.shopifyShop.findOne(record.shopId).then((res) => res.getField("accessToken"))
-      // const url = "https://" + record.shopUrl + "/admin/api/2024-01/products/count.json"
-      // const productCount = await fetch(url, {
-      //   method: "GET",
-      //   headers: {
-      //     "X-Shopify-Access-Token": accessToken
-      //   }
-      // }).then((res) => res.json())
-
-      // console.log("productCount", productCount);
-
-      // ==== Get the shop plan ====
-      // const shopPlan = await api.shopifyAppSubscription.maybeFindFirst({
-      //   filter: {
-      //     status: {
-      //       equals: "ACTIVE"
-      //     }
-      //   }
-      // }).catch((err) => {
-      //   console.log("err", err);
-      //   return null;
-      // })
-
-      // ==== Create App Subscription ====
-      // let applyCharge = false
-      // let chargePlan = {}
-
-      // if(shopPlan){
-      //   const {min, max} = getProductCount(shopPlan.name);
-      //   if(productCount.count <= max){
-      //     applyCharge = false
-      //   } else {
-      //     applyCharge = true
-      //   }
-      // } else {
-      //   applyCharge = true
-      // }
-      // if(applyCharge){
-      //   const returnUrl = `https://${record.shopUrl}/admin/apps/101788b0d255dbcf49ca90c5e287672a`
-      //   // const returnUrl = `https://${record.shopUrl}/admin/apps/972199c6b463888b97627ccc2112a626`
-      //   const CREATE_SUBSCRIPTION_QUERY = `
-      //     mutation CreateSubscription($name: String!, $price: Decimal!) {
-      //       appSubscriptionCreate(
-      //         name: $name,
-      //         test: false,
-      //         returnUrl: "${returnUrl}",
-      //         lineItems: [{
-      //           plan: {
-      //             appRecurringPricingDetails: {
-      //               price: { amount: $price, currencyCode: USD }
-      //               interval: EVERY_30_DAYS
-      //             }
-      //           }
-      //         }]
-      //       ) {
-      //         userErrors {
-      //           field
-      //           message
-      //         }
-      //         confirmationUrl
-      //         appSubscription {
-      //           id
-      //         }
-      //       }
-      //     }
-      //   `;
-
-      //   // Identify the plan to charge based on the product count
-      //   SHOPIFY_PLANS.forEach((plan) => {
-      //     const {min, max} = getProductCount(plan.name);
-      //     if(productCount.count >= min && productCount.count <= max){
-      //       chargePlan = {
-      //         name: plan.name,
-      //         price: plan.price
-      //       }
-      //     }
-      //   })
-      //   const result = await shopify.graphql(CREATE_SUBSCRIPTION_QUERY, chargePlan);
-      
-      //   const { confirmationUrl, appSubscription } = result.appSubscriptionCreate;
-      //   await api.shopSettings.update(record.id, {
-      //     processStatus: {
-      //       state: "CHARGE",
-      //       confirmationUrl
-      //     }
-      //   })
-      //   return
-      // }
 
       // ==== Start with the bulk watermark ====
       // Run a bulk query to get all the product media based on the settings
       const activeSettings = params.shopSettings.activeData;
       const featuredOnly = activeSettings.featuredOnly;
-      // const shopify = connections.shopify.current;
       let queryStr = ""
       if(activeSettings.radioValue === "selectedProducts"){
         const productIdList = activeSettings.selectedProducts.map((productId) => productId.id.replace("gid://shopify/Product/", ""))
@@ -195,7 +105,7 @@ export async function onSuccess({ params, record, logger, api, connections }) {
         }
       });
       lambdaClient.invoke({
-        FunctionName: "watermark-remove",
+        FunctionName: "watermark-remove-dev",
         InvocationType: "Event",
         Payload: JSON.stringify({
           operationId: operationId,

@@ -118,6 +118,7 @@ export const schema: GadgetModel = {
       "phone",
       "planDisplayName",
       "planName",
+      "planPublicDisplayName",
       "preLaunchEnabled",
       "primaryLocale",
       "province",
