@@ -29,7 +29,7 @@
       "settings": "Paramètres",
       "featuredOnly": "Appliquer uniquement sur l'image en vedette",
       "autoApply": "Appliquer automatiquement sur les nouvelles images",
-      "testNote": "Note : Il est recommandé de le tester sur certains produits avant de l'appliquer à tous les produits",
+      "testNote": "Astuce : prévisualisez sur des produits sélectionnés avant de l’appliquer à tous les produits.",
       "selectProducts": "Sélectionner des Produits",
       "selectCollections": "Sélectionner des Collections",
       "selected": "sélectionné",
@@ -101,15 +101,15 @@
       "compressed": "Compressé"
     },
     "HelpCard": {
-      "needHelp": "Besoin d'aide ?",
-      "freeSetup": "Assistance à la configuration gratuite",
-      "reachOut": "Veuillez contacter notre support, et nous vous aiderons pour le style des widgets, le positionnement, l'intégration du tiroir du panier, ou toute autre question.",
-      "liveChat": "Chat en Direct",
-      "liveChatMsg": "Support par chat en direct 24/7, réponse et assistance immédiate",
-      "chatNow": "Chatter Maintenant",
-      "email": "Support par email",
-      "emailMsg": "Votre email sera généralement traité dans les 12-24 heures.",
-      "sendEmail": "Envoyer un Email"
+      "needHelp": "Besoin d’aide?",
+      "freeSetup": "Assistance d’installation gratuite",
+      "reachOut": "Nous sommes là pour vous aider avec l’installation, le style, le positionnement ou toute autre question.",
+      "liveChat": "Chat en direct",
+      "liveChatMsg": "Support de chat en direct 24 h/24 et 7 j/7, réponse et assistance instantanées",
+      "chatNow": "Discuter maintenant",
+      "email": "Assistance par e-mail",
+      "emailMsg": "Nous vous répondrons sous 12 à 24 heures.",
+      "sendEmail": "Contacter le support"
     },
     "ChargeCard": {
       "title": "Choisissez votre plan",

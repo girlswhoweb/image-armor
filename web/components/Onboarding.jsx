@@ -32,10 +32,10 @@ export function Onboarding() {
   
   const steps = [
     {
-      title: 'Add Watermark & Optimise',
+      title: 'Add Watermark & Optimise Images',
       description: 'Add logo or text watermark to protect your store & optimise page load time with image compression.',
       action: () => navigate('/watermark'),
-      buttonText: 'Add Watermark & Optimise',
+      buttonText: 'Add Watermark & Optimise Images',
       key: 'applyWatermark',
     },
     {

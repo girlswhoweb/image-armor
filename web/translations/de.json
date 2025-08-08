@@ -29,8 +29,7 @@
       "settings": "Einstellungen",
       "featuredOnly": "Nur auf Hauptbild anwenden",
       "autoApply": "Automatisch auf neue Bilder anwenden",
-      "testNote": "Hinweis: Es wird empfohlen, dies zunächst an bestimmten Produkten zu testen, bevor es auf alle Produkte angewendet wird",
-      "selectProducts": "Produkte auswählen",
+      "testNote": "Tipp: Vorschau für ausgewählte Produkte anzeigen, bevor Sie es auf alle Produkte anwenden.",      "selectProducts": "Produkte auswählen",
       "selectCollections": "Kollektionen auswählen",
       "selected": "ausgewählt",
       "clear": "Löschen",
@@ -103,13 +102,13 @@
     "HelpCard": {
       "needHelp": "Brauchen Sie Hilfe?",
       "freeSetup": "Kostenlose Einrichtungshilfe",
-      "reachOut": "Bitte kontaktieren Sie unseren Support, und wir helfen Ihnen bei der Gestaltung von Widgets, Positionierung, Integration des Warenkorbs oder anderen Anfragen.",
+      "reachOut": "Wir helfen Ihnen bei Installation, Styling, Positionierung oder anderen Fragen.",
       "liveChat": "Live-Chat",
-      "liveChatMsg": "24/7 Live-Chat-Support, sofortige Antwort und Unterstützung",
+      "liveChatMsg": "24/7 Live-Chat-Support, sofortige Antworten und Hilfe",
       "chatNow": "Jetzt chatten",
       "email": "E-Mail-Support",
-      "emailMsg": "Ihre E-Mail wird in der Regel innerhalb von 12-24 Stunden bearbeitet.",
-      "sendEmail": "E-Mail senden"
+      "emailMsg": "Wir melden uns innerhalb von 12–24 Stunden bei Ihnen.",
+      "sendEmail": "Support kontaktieren"
     },
     "ChargeCard": {
       "title": "Wähle deinen Plan",

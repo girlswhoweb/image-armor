@@ -29,7 +29,7 @@
       "settings": "Configuraciones",
       "featuredOnly": "Aplicar solo en imagen destacada",
       "autoApply": "Aplicar automáticamente en imágenes nuevas",
-      "testNote": "Nota: Se recomienda probarlo en ciertos productos antes de aplicarlo en todos los productos",
+      "testNote": "Consejo: Previsualiza en productos seleccionados antes de aplicar a todos los productos.",
       "selectProducts": "Seleccionar Productos",
       "selectCollections": "Seleccionar Colecciones",
       "selected": "seleccionado",
@@ -101,15 +101,15 @@
       "compressed": "Comprimido"
     },
     "HelpCard": {
-      "needHelp": "¿Necesita ayuda?",
-      "freeSetup": "Asistencia gratuita de configuración",
-      "reachOut": "Por favor, contacte con nuestro soporte, y le asistiremos con el estilo de los widgets, posicionamiento, integración del cajón del carrito o cualquier otra consulta.",
-      "liveChat": "Chat en Vivo",
-      "liveChatMsg": "Soporte de chat en vivo 24/7, respuesta y asistencia inmediata",
-      "chatNow": "Chatear Ahora",
-      "email": "Soporte por Email",
-      "emailMsg": "Su email será atendido típicamente dentro de las 12-24 horas.",
-      "sendEmail": "Enviar Email"
+      "needHelp": "¿Necesitas ayuda?",
+      "freeSetup": "Asistencia de configuración gratuita",
+      "reachOut": "Estamos aquí para ayudar con la instalación, el estilo, la ubicación o cualquier otra pregunta.",
+      "liveChat": "Chat en vivo",
+      "liveChatMsg": "Soporte de chat en vivo 24/7, respuesta y asistencia al instante",
+      "chatNow": "Chatear ahora",
+      "email": "Soporte por correo electrónico",
+      "emailMsg": "Te responderemos en 12–24 horas.",
+      "sendEmail": "Contactar soporte"
     },
     "ChargeCard": {
       "title": "Elige tu plan",

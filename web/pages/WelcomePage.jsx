@@ -23,8 +23,8 @@ export default function WelcomePage() {
         <Layout.Section>
           <Card padding="400">
             <BlockStack>
-              <Text variant="headingXl"><span style={{ color: '#d773aa' }}>Welcome 👋</span></Text>
-              <Text variant="bodyLg">ImageArmor: Anti-theft Watermark</Text>
+              <Text variant="headingXl"><span style={{ color: '#d773aa' }}>Welcome to ImageArmor! 🛡️</span></Text>
+              <Text variant="bodyLg">Protect Your Store’s Images with Invisible Watermarks</Text>
             </BlockStack>
           </Card>
         </Layout.Section>
@@ -62,13 +62,13 @@ export default function WelcomePage() {
               <BlockStack gap="200">
                 <Text variant="headingMd">
                   <span style={{ color: '#d773aa' }}>
-                    Protect your Images: Add Watermark and Optimise
+                    Secure & Speed Up Your Store Images
                   </span>
                 </Text>
-                <Text variant="bodyMd" tone="subdued">Add logo or text watermark to protect your store & optimise page load time with image compression.</Text>
+                <Text variant="bodyMd" tone="subdued">Add a custom logo or text watermark to deter image theft — and automatically compress files for lightning-fast page loads.</Text>
               </BlockStack>
               <InlineStack align="start" blockAlign="start">
-                <CustomButton onClick={() => navigate("/watermark")}>Add Watermark & Optimise</CustomButton>
+                <CustomButton onClick={() => navigate("/watermark")}>Add Watermark & Optimise Images</CustomButton>
               </InlineStack>
             </BlockStack>
           </Card>

@@ -29,7 +29,7 @@
       "settings": "Impostazioni",
       "featuredOnly": "Applica solo sull’immagine in evidenza",
       "autoApply": "Applicazione automatica sulle nuove immagini",
-      "testNote": "Nota: Si consiglia di testarlo su determinati prodotti prima di applicarlo su tutti i prodotti",
+      "testNote": "Suggerimento: visualizza l’anteprima sui prodotti selezionati prima di applicarla a tutti i prodotti.",
       "selectProducts": "Seleziona i prodotti",
       "selectCollections": "Seleziona le collezioni",
       "selected": "Selezionato",
@@ -103,13 +103,13 @@
     "HelpCard": {
       "needHelp": "Hai bisogno di aiuto?",
       "freeSetup": "Assistenza gratuita per la configurazione",
-      "reachOut": "Contatta il nostro supporto e ti aiuteremo con la personalizzazione del widget, il posizionamento, l’integrazione del carrello a scomparsa o qualsiasi altra domanda",
-      "liveChat": "Chat in tempo reale",
-      "liveChatMsg": "Supporto via chat dal vivo 24/7, risposte e assistenza immediata",
+      "reachOut": "Siamo qui per aiutarti con l’installazione, lo stile, il posizionamento o qualsiasi altra domanda.",
+      "liveChat": "Chat dal vivo",
+      "liveChatMsg": "Supporto chat dal vivo 24/7, risposta e assistenza immediata",
       "chatNow": "Chatta ora",
       "email": "Supporto via email",
-      "emailMsg": "La tua email verrà trattata generalmente entro 12 - 24 ore",
-      "sendEmail": "Manda email"
+      "emailMsg": "Ti risponderemo entro 12–24 ore.",
+      "sendEmail": "Contatta il supporto"
     },
     "FAQ": {
       "title": "Domande frequenti",

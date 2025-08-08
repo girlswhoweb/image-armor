@@ -29,7 +29,7 @@
       "settings": "Indstillinger",
       "featuredOnly": "Anvend kun på fremhævet billede",
       "autoApply": "Anvend automatisk på nye billeder",
-      "testNote": "Bemærk: Det anbefales at teste det på visse produkter, før det anvendes på alle produkter",
+      "testNote": "Tip: Forhåndsvis udvalgte produkter, før du anvender det på alle produkter.",
       "selectProducts": "Vælg Produkter",
       "selectCollections": "Vælg Samlinger",
       "selected": "valgt",
@@ -101,15 +101,15 @@
       "compressed": "Komprimeret"
     },
     "HelpCard": {
-      "needHelp": "Har du brug for hjælp?",
+      "needHelp": "Brug for hjælp?",
       "freeSetup": "Gratis opsætningsassistance",
-      "reachOut": "Kontakt venligst vores support, og vi vil hjælpe dig med widget-styling, positionering, integration af indkøbskurv eller andre forespørgsler.",
-      "liveChat": "Live Chat",
-      "liveChatMsg": "24/7 live chat support, svar og assistance med det samme",
+      "reachOut": "Vi er her for at hjælpe med installation, styling, placering eller andre spørgsmål.",
+      "liveChat": "Livechat",
+      "liveChatMsg": "24/7 livechat-support, svar og hjælp med det samme",
       "chatNow": "Chat nu",
-      "email": "Email support",
-      "emailMsg": "Din email vil typisk blive besvaret inden for 12-24 timer.",
-      "sendEmail": "Send Email"
+      "email": "E-mail-support",
+      "emailMsg": "Vi vender tilbage inden for 12–24 timer.",
+      "sendEmail": "Kontakt support"
     },
     "ChargeCard": {
       "title": "Vælg din plan",

@@ -45,7 +45,7 @@ export default async function route({ request, reply, api, logger, connections }
     `, {
       name: planName,
       returnUrl,
-      test: false,
+      test: true, // to test payments
     });
 
     const data = chargeResponse.appSubscriptionCreate;

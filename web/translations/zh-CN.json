@@ -30,7 +30,7 @@
       "settings": "设置",
       "featuredOnly": "仅应用于特色图片",
       "autoApply": "自动应用于新图片",
-      "testNote": "注：建议在应用于所有产品之前先在特定产品上测试",
+      "testNote": "提示：先在选定的商品上预览，然后再应用到所有商品。",
       "selectProducts": "选择产品",
       "selectCollections": "选择集合",
       "selected": "已选择",
@@ -103,14 +103,14 @@
     },
     "HelpCard": {
       "needHelp": "需要帮助？",
-      "freeSetup": "免费设置帮助",
-      "reachOut": "请联系我们的支持团队，我们将协助您进行小部件样式、定位、购物车抽屉集成或其他查询。",
+      "freeSetup": "免费安装协助",
+      "reachOut": "我们随时为您提供安装、样式、定位或其他任何问题的帮助。",
       "liveChat": "在线聊天",
-      "liveChatMsg": "24/7在线聊天支持, 即时回复和协助",
+      "liveChatMsg": "24/7 在线聊天支持，实时回复并快速协助",
       "chatNow": "立即聊天",
       "email": "电子邮件支持",
-      "emailMsg": "您的电子邮件通常会在12-24小时内得到回复。",
-      "sendEmail": "发送电子邮件"
+      "emailMsg": "我们将在12–24小时内回复您。",
+      "sendEmail": "联系支持"
     },
     "ChargeCard": {
       "title": "选择您的计划",

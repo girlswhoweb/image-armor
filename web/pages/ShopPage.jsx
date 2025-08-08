@@ -233,7 +233,7 @@ const ShopPage = () => {
 
   return (
     <Page
-      title="Add Watermark & Optimise"
+      title="Add Watermark & Optimise Images"
       backAction={{
         onAction: async () => {
           await shopify.saveBar.leaveConfirmation();
@@ -321,7 +321,7 @@ const ShopPage = () => {
                                 Start Processing 👉
                               </span>
                             </Text>
-                            <Text as="h3" variant="bodyMd" tone="subdued">Note: This will start the task to process your images, if you just want to save the preview, click on "Save" after making your changes</Text>
+                            <Text as="h3" variant="bodyMd" tone="subdued">Note: When you press Process Images, the app will apply your watermark and compression to all selected files. If you prefer to just keep a preview, click Save once you’ve set your options.</Text>
                           </BlockStack>
                           <BlockStack>
                             <CustomButton onClick={onApply} icon={WandMinor} loading={activating} disabled={["PROCESSING", "REMOVING"].includes(processStatus?.state?.toUpperCase())}>{processStatus?.state?.toUpperCase() === "PROCESSING" ? `${i18n.translate("AppData.HeaderCard.processing")}...` : i18n.translate("AppData.HeaderCard.apply")}</CustomButton>
