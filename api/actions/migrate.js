@@ -1,5 +1,4 @@
 import { MigrateGlobalActionContext } from "gadget-server";
-import Shopify from "shopify-api-node";
 const { MongoClient } = require('mongodb');
 
 // Connection URL
