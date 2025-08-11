@@ -39,28 +39,6 @@ const HelpCard = () => {
             display: "grid",
             gridTemplate: "auto / repeat(2, 1fr)",
           }}>
-            {/* <div style={{ padding: "var(--p-space-600)", borderRight: "1px solid var(--p-color-border)" }}>
-              <BlockStack gap={200} align="start" inlineAlign="start">
-                <InlineStack align="start" blockAlign="start" gap={150}>
-                  <span>
-                    <Icon
-                      source={ConversationMinor}
-                      // tone="base"
-                      
-                    />
-                  </span>
-                  <Text as="h3" variant="bodyMd" fontWeight="semibold">
-                    {i18n.translate("AppData.HelpCard.liveChat")}
-                  </Text>
-                </InlineStack>
-                <Text variant="bodyMd">
-                  {i18n.translate("AppData.HelpCard.liveChatMsg")}
-                </Text>
-                <Button variant="primary" onClick={() => [window?.tidioChatApi?.open(), console.log("tidioChatApi", window?.tidioChatApi)]}>
-                  {i18n.translate("AppData.HelpCard.chatNow")}
-                </Button>
-              </BlockStack>
-            </div> */}
             <div style={{ padding: "var(--p-space-600)" }}>
             <BlockStack gap={200} align="start" inlineAlign="start">
               <InlineStack align="start" blockAlign="start" gap={150}>
