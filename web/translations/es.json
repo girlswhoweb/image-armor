@@ -40,6 +40,7 @@
     },
     "OptimisationCard": {
       "title": "Optimizar y Comprimir",
+      "subtitle": "Recomendamos comprimir tus imágenes mientras aplicas la marca de agua para acelerar el tiempo de carga de tu tienda. Guardaremos los archivos originales por ti y podrás revertir esto en cualquier momento.",
       "compression": "Compresión",
       "min": "Mín",
       "max": "Máx",

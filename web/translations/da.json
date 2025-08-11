@@ -40,6 +40,7 @@
     },
     "OptimisationCard": {
       "title": "Optimer & Komprimer",
+      "subtitle": "Vi anbefaler at komprimere dine billeder, mens du tilføjer vandmærker, for at gøre indlæsningen af din butik hurtigere. Vi gemmer de originale filer for dig, og du kan til enhver tid rulle ændringen tilbage.",
       "compression": "Kompression",
       "min": "Min",
       "max": "Maks",

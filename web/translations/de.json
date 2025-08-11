@@ -39,6 +39,7 @@
     },
     "OptimisationCard": {
       "title": "Optimieren & Komprimieren",
+      "subtitle": "Wir empfehlen, Ihre Bilder zu komprimieren, während Sie ein Wasserzeichen hinzufügen, um die Ladezeit Ihres Shops zu beschleunigen. Wir speichern die Originaldateien für Sie, und Sie können dies jederzeit rückgängig machen.",
       "compression": "Kompression",
       "min": "Min",
       "max": "Max",

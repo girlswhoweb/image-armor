@@ -40,6 +40,7 @@
     },
     "OptimisationCard": {
       "title": "Optimise & Compress",
+      "subtitle": "We recommend compressing your images while you watermark to speed up your store loading time. We will store the original files for you, and you can revert this at any time.",
       "compression": "Compression",
       "min": "Min",
       "max": "Max",

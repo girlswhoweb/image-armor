@@ -40,6 +40,7 @@
     },
     "OptimisationCard": {
       "title": "Optimiser & Compresser",
+      "subtitle": "Nous recommandons de compresser vos images pendant l’ajout du filigrane afin d’accélérer le chargement de votre boutique. Nous conserverons les fichiers originaux pour vous et vous pourrez revenir en arrière à tout moment.",
       "compression": "Compression",
       "min": "Min",
       "max": "Max",

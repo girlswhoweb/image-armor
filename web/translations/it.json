@@ -40,6 +40,7 @@
     },
     "OptimisationCard": {
       "title": "Ottimizza e comprimi",
+      "subtitle": "Ti consigliamo di comprimere le immagini mentre applichi la filigrana per velocizzare il caricamento del negozio. Conserveremo i file originali per te e potrai annullare questa operazione in qualsiasi momento.",
       "compression": "Compressione",
       "min": "Minimo",
       "max": "Massimo",
