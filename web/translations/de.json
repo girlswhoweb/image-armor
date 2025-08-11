@@ -45,7 +45,7 @@
       "setToDefault": "Auf Standard setzen"
     },
     "WatermarkCard": {
-      "title": "Wasserzeichen anwenden",
+      "title": "Wasserzeichen-Erscheinungsbild konfigurieren",
       "watermarkType": "Wasserzeichen-Typ",
       "watermarkImage": "Wasserzeichenbild",
       "opacity": "Deckkraft",

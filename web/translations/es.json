@@ -46,7 +46,7 @@
       "setToDefault": "Establecer como predeterminado"
     },
     "WatermarkCard": {
-      "title": "Aplicar Marca de Agua",
+      "title": "Configurar la apariencia de la marca de agua",
       "watermarkType": "Tipo de Marca de Agua",
       "watermarkImage": "Imagen de marca de agua",
       "opacity": "Opacidad",

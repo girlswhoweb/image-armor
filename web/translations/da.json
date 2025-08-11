@@ -46,7 +46,7 @@
       "setToDefault": "Sæt til standard"
     },
     "WatermarkCard": {
-      "title": "Anvend Vandmærke",
+      "title": "Konfigurer vandmærkets udseende",
       "watermarkType": "Vandmærke Type",
       "watermarkImage": "Vandmærkebillede",
       "opacity": "Gennemsigtighed",

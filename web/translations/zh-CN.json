@@ -47,7 +47,7 @@
       "setToDefault": "恢复默认设置"
     },
     "WatermarkCard": {
-      "title": "应用水印",
+      "title": "配置水印外观",
       "watermarkType": "水印类型",
       "watermarkImage": "水印图片",
       "opacity": "不透明度",

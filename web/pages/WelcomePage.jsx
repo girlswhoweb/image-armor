@@ -24,7 +24,7 @@ export default function WelcomePage() {
           <Card padding="400">
             <BlockStack>
               <Text variant="headingXl"><span style={{ color: '#d773aa' }}>Welcome to ImageArmor! 🛡️</span></Text>
-              <Text variant="bodyLg">Protect Your Store’s Images with Invisible Watermarks</Text>
+              <Text variant="bodyLg">Watermark your product images with one click</Text>
             </BlockStack>
           </Card>
         </Layout.Section>

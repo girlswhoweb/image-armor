@@ -46,7 +46,7 @@
       "setToDefault": "Set to default"
     },
     "WatermarkCard": {
-      "title": "Apply Watermark",
+      "title": "Configure Watermark Appearance",
       "watermarkType": "Watermark Type",
       "watermarkImage": "Watermark Image",
       "opacity": "Opacity",

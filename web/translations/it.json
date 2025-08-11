@@ -46,7 +46,7 @@
       "setToDefault": "Imposta su predefinito"
     },
     "WatermarkCard": {
-      "title": "Applica filigrana",
+      "title": "Configura l’aspetto della filigrana",
       "watermarkType": "Tipo di filigrana",
       "watermarkImage": "Immagine della filigrana",
       "opacity": "Trasparenza",
