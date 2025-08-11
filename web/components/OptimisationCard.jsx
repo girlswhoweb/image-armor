@@ -27,6 +27,9 @@ export default function OptimisationCard({ appSettings, setAppSettings }) {
             })
           }
         />
+        <Text variant="bodyMd">
+          {i18n.translate("AppData.OptimisationCard.subtitle")}
+        </Text>      
       </Box>
       <Divider />
       <div className={appSettings?.optimisationEnabled ? "" : "d-blocked"}>
@@ -38,7 +41,6 @@ export default function OptimisationCard({ appSettings, setAppSettings }) {
               </span>
             </Text>
             <RangeSlider
-              // label={i18n.translate("AppData.OptimisationCard.compression") + " %"}
               min={0}
               max={100}
               value={appSettings?.compression}
@@ -62,7 +64,7 @@ export default function OptimisationCard({ appSettings, setAppSettings }) {
             />
             <BlockStack inlineAlign="start">
               <Button
-                onAction={() =>
+                onClick={() =>
                   setAppSettings({
                     ...appSettings,
                     compression: 35,
@@ -74,43 +76,7 @@ export default function OptimisationCard({ appSettings, setAppSettings }) {
               </Button>
             </BlockStack>
           </BlockStack>
-        </Box>
-        {/* <RangeSlider
-          label={i18n.translate("AppData.OptimisationCard.compression") + " %"}
-          min={0}
-          max={100}
-          value={appSettings?.compression}
-          onChange={(val) =>
-            setAppSettings({
-              ...appSettings,
-              isSaved: false,
-              compression: val,
-            })
-          }
-          onBlur={(e) =>
-            setAppSettings({
-              ...appSettings,
-              isSaved: false,
-              compression: e.target.value,
-            })
-          }
-          output
-          prefix={i18n.translate("AppData.OptimisationCard.min")}
-          suffix={i18n.translate("AppData.OptimisationCard.max")}
-        /> */}
-        {/* <div style={{ marginTop: "10px" }}>
-          <Button
-            onAction={() =>
-              setAppSettings({
-                ...appSettings,
-                compression: 35,
-                isSaved: false,
-              })
-            }
-          >
-            {i18n.translate("AppData.OptimisationCard.setToDefault")}
-          </Button>
-        </div> */}
+        </Box>    
       </div>
     </Card>
   );
