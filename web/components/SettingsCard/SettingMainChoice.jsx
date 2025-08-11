@@ -1,6 +1,5 @@
 import { Button, RadioButton, BlockStack, InlineStack } from "@shopify/polaris";
 import { useI18n } from "@shopify/react-i18n";
-import CustomButton from "../Buttons/CustomButton";
 
 export default function SettingMainChoice({
   setShowPicker,
@@ -35,14 +34,14 @@ export default function SettingMainChoice({
                   >
                     {i18n.translate("AppData.SettingsCard.selectProducts")}
                   </Button> */}
-                  <CustomButton
+                  <Button
                     size="small"
                     onClick={() =>
                       setShowPicker({ show: true, type: "Product" })
                     }
                   >
                     {i18n.translate("AppData.SettingsCard.selectProducts")}
-                  </CustomButton>
+                  </Button>
                   <div>
                     <div>{appSettings.selectedProducts.length} {i18n.translate("AppData.SettingsCard.selected")}</div>
                     {appSettings.selectedProducts.length > 0 && (

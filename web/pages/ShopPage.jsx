@@ -20,14 +20,13 @@ import SettingsCard from "../components/SettingsCard/index";
 import PreviewCard from "../components/PreviewCard";
 import { useI18n } from "@shopify/react-i18n";
 import { ResetMinor, WandMinor } from "@shopify/polaris-icons";
-
 import enTranslations from "../translations/en.json";
 import Pricing from "../components/Pricing/index";
 import { useGadget } from "@gadgetinc/react-shopify-app-bridge";
 import { SaveBar, useAppBridge } from "@shopify/app-bridge-react";
 import { useNavigate } from "react-router-dom";
 import HelpCard from "../components/HelpCard";
-import CustomButton from "../components/Buttons/CustomButton";
+import { Button } from "@shopify/polaris";
 
 const ShopPage = () => {
   const [{ data, fetching, error }] = useFindFirst(api.shopSettings);
@@ -324,7 +323,7 @@ const ShopPage = () => {
                             <Text as="h3" variant="bodyMd" tone="subdued">Note: When you press Process Images, the app will apply your watermark and compression to all selected files. If you prefer to just keep a preview, click Save once you’ve set your options.</Text>
                           </BlockStack>
                           <BlockStack>
-                            <CustomButton onClick={onApply} icon={WandMinor} loading={activating} disabled={["PROCESSING", "REMOVING"].includes(processStatus?.state?.toUpperCase())}>{processStatus?.state?.toUpperCase() === "PROCESSING" ? `${i18n.translate("AppData.HeaderCard.processing")}...` : i18n.translate("AppData.HeaderCard.apply")}</CustomButton>
+                            <Button variant="primary" onClick={onApply} icon={WandMinor} loading={activating} disabled={["PROCESSING", "REMOVING"].includes(processStatus?.state?.toUpperCase())}>{processStatus?.state?.toUpperCase() === "PROCESSING" ? `${i18n.translate("AppData.HeaderCard.processing")}...` : i18n.translate("AppData.HeaderCard.apply")}</Button>                            
                           </BlockStack>
                         </InlineStack>
                       </Card>

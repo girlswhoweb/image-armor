@@ -1,10 +1,9 @@
-import { BlockStack, Button, Card, EmptyState, InlineGrid, LegacyCard, Spinner, Text } from "@shopify/polaris";
-import React, { useEffect, useState } from "react";
+import { BlockStack, Button, Card, EmptyState, InlineGrid, Spinner, Text } from "@shopify/polaris";
+import { useEffect, useState } from "react";
 import prettyBytes from "pretty-bytes";
 import { api } from "../api";
 import { useI18n } from "@shopify/react-i18n";
 import { useGadget } from "@gadgetinc/react-shopify-app-bridge";
-import CustomButton from "./Buttons/CustomButton";
 
 export default function PreviewCard({ appSettings, setAppSettings }) {
   const [i18n] = useI18n({ id: "AppData"});
@@ -141,9 +140,9 @@ export default function PreviewCard({ appSettings, setAppSettings }) {
         {previewProductId == "" && (
           <div className="preview-empty">
             <EmptyState heading={i18n.translate('AppData.PreviewCard.selectProductLong')}>
-              <CustomButton onClick={onSelection} size="small">
+              <Button onClick={onSelection} size="small">
                 {i18n.translate('AppData.PreviewCard.selectProduct')}
-              </CustomButton>
+              </Button>
             </EmptyState>
           </div>
         )}

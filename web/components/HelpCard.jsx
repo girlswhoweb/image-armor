@@ -2,7 +2,6 @@ import { BlockStack, Button, Card, InlineStack, Text, Icon, Box, Badge } from "@
 import { useI18n } from "@shopify/react-i18n";
 import enTranslations from "../translations/en.json";
 import { InviteMinor } from "@shopify/polaris-icons";
-import CustomButton from "./Buttons/CustomButton";
 
 const HelpCard = () => {
   const [i18n] = useI18n({
@@ -77,12 +76,12 @@ const HelpCard = () => {
               <Text variant="bodyMd">
                 {i18n.translate("AppData.HelpCard.emailMsg")}
               </Text>
-              <CustomButton 
+              <Button 
                 onClick={() => window.open("mailto:help@girlswhoweb.com", "_blank")}
                 size="small"
               >
                 {i18n.translate("AppData.HelpCard.sendEmail")}
-              </CustomButton>
+              </Button>
             </BlockStack>
             </div>
           </div>

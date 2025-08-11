@@ -1,11 +1,10 @@
 import { useGadget } from "@gadgetinc/react-shopify-app-bridge";
 import { useFindFirst } from "@gadgetinc/react";
-import { Banner, BlockStack, Button, CalloutCard, Card, InlineStack, Layout, Page, Spinner, Text } from "@shopify/polaris";
+import { Banner, BlockStack, Button, Card, InlineStack, Layout, Page, Text } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
 import { Onboarding } from "../components/Onboarding";
 import HelpCard from "../components/HelpCard";
 import { api } from "../api";
-import CustomButton from "../components/Buttons/CustomButton";
 
 export default function WelcomePage() {
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ export default function WelcomePage() {
                 <Text variant="bodyMd" tone="subdued">Add a custom logo or text watermark to deter image theft — and automatically compress files for lightning-fast page loads.</Text>
               </BlockStack>
               <InlineStack align="start" blockAlign="start">
-                <CustomButton onClick={() => navigate("/watermark")}>Add Watermark & Optimise Images</CustomButton>
+                <Button onClick={() => navigate("/watermark")} variant="primary" size="large">Add Watermark & Optimise Images</Button>
               </InlineStack>
             </BlockStack>
           </Card>
