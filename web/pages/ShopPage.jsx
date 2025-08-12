@@ -78,6 +78,22 @@ const ShopPage = () => {
     error: false,
   });
 
+  // Re-open banner for each NEW COMPLETED run (even if user dismissed the previous one)
+  useEffect(() => {
+    const state = processStatus?.state?.toUpperCase?.();
+    if (state !== "COMPLETED") return;
+  
+    const op = processStatus?.operationId || String(processStatus?.updatedAt || "");
+    if (!op) return;
+  
+    // only when a *new* completion arrives
+    if (lastCompletedOpRef.current !== op) {
+      lastCompletedOpRef.current = op;
+      setShowCompletedBanner(true); // <-- key line
+    }
+  }, [processStatus?.state, processStatus?.operationId, processStatus?.updatedAt]);
+
+
   // Ask for a review *after* successful processing
   useEffect(() => {
     const state = processStatus?.state?.toUpperCase?.();
@@ -141,14 +157,15 @@ const ShopPage = () => {
     if (fetching) return
     if (["PROCESSING", "REMOVING", "UPLOADING"].includes(processStatus?.state?.toUpperCase())) {
       const interval = setInterval(async () => {
-        const shopData = await api.shopSettings.findByShopId(data._shopId);
-        if(shopData.processStatus){
-          setProcessStatus(shopData.processStatus);
+        if (!data?._shopId) return;
+        const fresh = await api.shopSettings.findByShopId(data._shopId);
+        if (fresh?.processStatus) {
+          setProcessStatus(fresh.processStatus);
         }
       }, 5000);
       return () => clearInterval(interval);
     }
-  }, [processStatus, fetching]);
+  }, [processStatus?.state, fetching, data?._shopId]);
 
   useEffect(() => {
     if (initLoad) {
