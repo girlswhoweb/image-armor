@@ -63,6 +63,15 @@ const ShopPage = () => {
     radioValue: "allProducts"
   });
   const [isPaidUser, setIsPaidUser] = useState(false);
+  const [starterPlanUser, setStarterPlanUser] = useState(false);
+  const [starterPlanStartDate, setStarterPlanStartDate] = useState(null);
+  const isStarterTrialActive = (() => {
+  if (!starterPlanUser || !starterPlanStartDate) return false;
+    const start = new Date(starterPlanStartDate);
+    const now = new Date();
+    const diffDays = (now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+    return diffDays <= 7; // 7-day trial window
+  })();
   const [isActive, setIsActive] = useState(false);
   const [isDifferent, setIsDifferent] = useState(false);
   const [showPricing, setShowPricing] = useState(false);
@@ -82,10 +91,10 @@ const ShopPage = () => {
   useEffect(() => {
     const state = processStatus?.state?.toUpperCase?.();
     if (state !== "COMPLETED") return;
-  
+
     const op = processStatus?.operationId || String(processStatus?.updatedAt || "");
     if (!op) return;
-  
+
     // only when a *new* completion arrives
     if (lastCompletedOpRef.current !== op) {
       lastCompletedOpRef.current = op;
@@ -138,6 +147,8 @@ const ShopPage = () => {
         setIsDifferent(data.isDifferent);
         setAppSettings(data.data);
         setIsPaidUser(data.isPaidUser);
+        setStarterPlanUser(!!data.starterPlanUser);
+        setStarterPlanStartDate(data.starterPlanStartDate ?? null);        
         setShopSettingsId(data.id);
         if(data.processStatus){
           setProcessStatus(data.processStatus);
@@ -182,7 +193,7 @@ const ShopPage = () => {
       message: `${i18n.translate("AppData.General.Updating")}...`,
       error: false,
     });
-    if (skipCharge === false && isPaidUser !== true) {
+    if (skipCharge === false && !(isPaidUser || isStarterTrialActive)) {
       shopify.modal.show("accept-charge-model");
       return;
     }

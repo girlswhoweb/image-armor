@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Text, BlockStack, Collapsible, Button, InlineStack, Icon, ProgressBar, Layout } from '@shopify/polaris';
+import { useEffect, useState } from 'react';
+import { Card, Text, BlockStack, Collapsible, Button, InlineStack, Icon, ProgressBar } from '@shopify/polaris';
 import { CancelMinor, CircleTickMajor } from '@shopify/polaris-icons';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api';
@@ -11,9 +11,6 @@ export function Onboarding() {
   const [isOpen, setIsOpen] = useState(false);
   const [completedSteps, setCompletedSteps] = useState({
     applyWatermark: false,
-    disableRightClick: false,
-    disableTextCopy: false,
-    disableDev: false,
   });
   const navigate = useNavigate();
 
@@ -22,14 +19,6 @@ export function Onboarding() {
   const [{ data, fetching, error }] = useFindFirst(api.onboarding);
 
 
-  const handleClick = (handle) => {
-    const shopUrl = appBridge.config.shop;
-    const uuid = "9f0f7ef9-45f3-4614-9c0f-7c70d1ea4189"
-    const url = `https://${shopUrl}/admin/themes/current/editor?context=apps&activateAppId=${uuid}/${handle}`;
-    window.open(url, "_blank");
-  }
-
-  
   const steps = [
     {
       title: 'Add Watermark & Optimise Images',
@@ -37,33 +26,12 @@ export function Onboarding() {
       action: () => navigate('/watermark'),
       buttonText: 'Add Watermark & Optimise Images',
       key: 'applyWatermark',
-    },
-    {
-      title: 'Disable Right Click',
-      description: 'This will prevent users from right clicking on your images to copy or download.',
-      action: () => handleClick('disable-right-click'),
-      buttonText: 'Disable Right Click',
-      key: 'disableRightClick',
-    },
-    {
-      title: 'Disable Text Copy',
-      description: 'This will prevent users from copying text from your images.',
-      action: () => handleClick('disable-text-selection'),
-      buttonText: 'Disable Text Copy',
-      key: 'disableTextCopy',
-    },
-    {
-      title: 'Disable Dev Panel',
-      description: "This will prevent users from using the browser's developer tools to inspect your images.",
-      action: () => handleClick('disable-dev-console'),
-      buttonText: 'Disable Dev Panel',
-      key: 'disableDev',
-    },
+    }
   ];
 
   useEffect(() => {
     if (data) {
-      if(!data.applyWatermark || !data.disableRightClick || !data.disableTextCopy || !data.disableDev) {
+      if(!data.applyWatermark) {
         setIsOpen(true);
       }
       setCompletedSteps(data);
@@ -77,9 +45,6 @@ export function Onboarding() {
     
     const newCompletedSteps = {  
       applyWatermark: completedSteps.applyWatermark,
-      disableRightClick: completedSteps.disableRightClick,
-      disableTextCopy: completedSteps.disableTextCopy,
-      disableDev: completedSteps.disableDev,
     };
 
     newCompletedSteps[key] = true;
@@ -103,9 +68,6 @@ export function Onboarding() {
     
     const newCompletedSteps = {  
       applyWatermark: true,
-      disableRightClick: true,
-      disableTextCopy: true,
-      disableDev: true,
     };
 
     if (completedSteps.id) {
@@ -123,7 +85,7 @@ export function Onboarding() {
   }
 
   if(fetching || Object.keys(completedSteps).filter(stepKey => 
-    completedSteps[stepKey] === true && ['applyWatermark', 'disableRightClick', 'disableTextCopy', 'disableDev'].includes(stepKey)
+    completedSteps[stepKey] === true && ['applyWatermark'].includes(stepKey)
   ).length === steps.length) {
     return null;
   }
@@ -131,7 +93,6 @@ export function Onboarding() {
   return (
     <Card>
       <BlockStack gap="400">
-        {/* <Text variant="headingSm">Let's get you setup</Text> */}
         <InlineStack align="space-between" blockAlign="center" gap="300">
           <div style={{ flex: "1" }}>
             <Button
@@ -147,11 +108,11 @@ export function Onboarding() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: "flex-end", gap: '5px' }}>
             <Text breakWord={false}>Step {Object.keys(completedSteps).filter(stepKey => 
-                completedSteps[stepKey] === true && ['applyWatermark', 'disableRightClick', 'disableTextCopy', 'disableDev'].includes(stepKey)
+                completedSteps[stepKey] === true && ['applyWatermark'].includes(stepKey)
               ).length} of {steps.length} completed</Text>
             <ProgressBar 
               progress={(Object.keys(completedSteps).filter(stepKey => 
-                completedSteps[stepKey] === true && ['applyWatermark', 'disableRightClick', 'disableTextCopy', 'disableDev'].includes(stepKey)
+                completedSteps[stepKey] === true && ['applyWatermark'].includes(stepKey)
               ).length / steps.length) * 100} 
               size="small" 
             />
@@ -191,7 +152,6 @@ export function Onboarding() {
                       onClick={() => {
                         step.action();
                       }} 
-                      // variant="tertiary"
                     >
                       {step.buttonText}
                     </Button>
