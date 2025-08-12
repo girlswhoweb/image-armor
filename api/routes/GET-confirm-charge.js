@@ -45,7 +45,7 @@ export default async function route({ request, reply, api, logger, connections }
     `, {
       name: planName,
       returnUrl,
-      test: true, // to test payments
+      test: false, // true to test payments
     });
 
     const data = chargeResponse.appSubscriptionCreate;
@@ -65,7 +65,7 @@ export default async function route({ request, reply, api, logger, connections }
 
     const chargeResponse = await connections.shopify.current.graphql(`
       mutation appPurchaseOneTimeCreate($name: String!, $price: MoneyInput!, $returnUrl: URL!) {
-        appPurchaseOneTimeCreate(name: $name, price: $price, returnUrl: $returnUrl, test: true) {
+        appPurchaseOneTimeCreate(name: $name, price: $price, returnUrl: $returnUrl, test: false) {
           userErrors { field message }
           confirmationUrl
           appPurchaseOneTime { id status }
