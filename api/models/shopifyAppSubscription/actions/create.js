@@ -32,6 +32,6 @@ export async function onSuccess({ record, api }) {
 /** @type { ActionOptions } */
 export const options = {
   actionType: "create",
-  triggers: { shopify: true },
+  triggers: { shopify: {} },
 };
 
