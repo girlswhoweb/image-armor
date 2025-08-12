@@ -12,7 +12,7 @@ import {
   Toast,
 } from "@shopify/polaris";
 import { api } from "../api";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import HeaderCard from "../components/HeaderCard";
 import DesignCard from "../components/DesignCard/index";
 import OptimisationCard from "../components/OptimisationCard";
@@ -53,6 +53,7 @@ const ShopPage = () => {
   const [activating, setActivating] = useState(false);
   const [restoreLoading, setRestoreLoading] = useState(false);
   const [showCompletedBanner, setShowCompletedBanner] = useState(true);
+  const lastCompletedOpRef = useRef(null);
   const [shopSettingsId, setShopSettingsId] = useState("");
   const [appSettings, setAppSettings] = useState({
     isSaved: true,
@@ -76,6 +77,25 @@ const ShopPage = () => {
     message: "",
     error: false,
   });
+
+  // Ask for a review *after* successful processing
+  useEffect(() => {
+    const state = processStatus?.state?.toUpperCase?.();
+    if (!shopify) return;
+    if (state !== "COMPLETED") return;
+
+    (async () => {
+      try {
+        const result = await shopify.reviews.request();
+        if (!result?.success) {
+          console.log(`Review modal not displayed. Reason: ${result?.code}: ${result?.message}`);
+        }
+      } catch (err) {
+        console.error("Error requesting review:", err);
+      }
+    })();
+  }, [processStatus?.state, shopify]);
+
 
   async function saveSettings() {
     setToastData({ isActive: true, message: "Updating...", error: false });
