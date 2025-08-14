@@ -188,6 +188,7 @@ export const permissions: GadgetPermissions = {
         shopifySync: {
           read: true,
           actions: {
+            abort: true,
             complete: true,
             error: true,
             run: true,
