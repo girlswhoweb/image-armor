@@ -98,7 +98,10 @@
       "selectProduct": "Produkt auswählen",
       "selectProductLong": "Wählen Sie ein Produkt zur Vorschau aus",
       "original": "Original",
-      "compressed": "Komprimiert"
+      "compressed": "Komprimiert",
+      "previewWithWatermark": "Vorschau (mit Wasserzeichen)",
+      "noSavingsKeptOriginal": "Kein Kompressionsvorteil – Originalbild beibehalten",
+      "mayIncreaseWithWatermark": "Enthält Wasserzeichen – Dateigröße kann größer sein"
     },
     "HelpCard": {
       "needHelp": "Brauchen Sie Hilfe?",

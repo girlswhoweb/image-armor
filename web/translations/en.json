@@ -99,7 +99,10 @@
       "selectProduct": "Select Product",
       "selectProductLong": "Select a product to preview",
       "original": "Original",
-      "compressed": "Compressed"
+      "compressed": "Compressed",
+      "previewWithWatermark": "Preview (with watermark)",
+      "noSavingsKeptOriginal": "No compression benefit – original image preserved",
+      "mayIncreaseWithWatermark": "Includes watermark—file may be larger"
     },
     "HelpCard": {
       "needHelp": "Need Help?",

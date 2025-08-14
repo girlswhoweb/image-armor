@@ -99,7 +99,10 @@
       "selectProduct": "Vælg Produkt",
       "selectProductLong": "Vælg et produkt til forhåndsvisning",
       "original": "Original",
-      "compressed": "Komprimeret"
+      "compressed": "Komprimeret",
+      "previewWithWatermark": "Forhåndsvisning (med vandmærke)",
+      "noSavingsKeptOriginal": "Ingen komprimeringsfordel – originalbillede bevaret",
+      "mayIncreaseWithWatermark": "Inkluderer vandmærke – filstørrelsen kan være større"
     },
     "HelpCard": {
       "needHelp": "Brug for hjælp?",

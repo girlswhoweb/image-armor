@@ -100,7 +100,10 @@
       "selectProduct": "选择产品",
       "selectProductLong": "选择一个产品进行预览",
       "original": "原图",
-      "compressed": "压缩"
+      "compressed": "压缩",
+      "previewWithWatermark": "预览（带水印）",
+      "noSavingsKeptOriginal": "无压缩收益 – 保留原始图像",
+      "mayIncreaseWithWatermark": "包含水印 – 文件大小可能更大"
     },
     "HelpCard": {
       "needHelp": "需要帮助？",

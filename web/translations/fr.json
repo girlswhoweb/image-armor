@@ -99,7 +99,10 @@
       "selectProduct": "Sélectionner un Produit",
       "selectProductLong": "Sélectionnez un produit pour l'aperçu",
       "original": "Original",
-      "compressed": "Compressé"
+      "compressed": "Compressé",
+      "previewWithWatermark": "Aperçu (avec filigrane)",
+      "noSavingsKeptOriginal": "Aucun avantage de compression – image originale conservée",
+      "mayIncreaseWithWatermark": "Inclut un filigrane – la taille du fichier peut être plus grande"
     },
     "HelpCard": {
       "needHelp": "Besoin d’aide?",
