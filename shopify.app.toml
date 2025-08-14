@@ -1,7 +1,7 @@
-client_id = "b18b37eadf6426f438f3773c4dd42098"
+client_id = "85e239c6236b5c96a89160b8f86560d0"
 name = "ImageArmor"
 handle = "imagearmor"
-application_url = "https://imagearmor.gadget.app"
+application_url = "https://imagearmor.gadget.app/api/shopify/install-or-render"
 embedded = true
 
 [build]
