@@ -8,14 +8,12 @@ export function useAcceptAppCharge() {
         headers: { Accept: "application/json" },
       });
 
-      // Keep the same flow: parse JSON and redirect top-level
       const data = await res.json().catch(() => null);
 
-      // New managed-pricing route returns { pricingUrl }
+      // Billing API returns confirmationUrl
       const url =
-        data?.pricingUrl ||                  // managed pricing
-        data?.confirmationUrl ||             // (fallback if you ever switch back)
-        data?.appSubscriptionCreate?.confirmationUrl; // (old shape)
+        data?.confirmationUrl ||
+        data?.appSubscriptionCreate?.confirmationUrl; // legacy fallback
 
       if (url) {
         (window.top ?? window).location.href = url;
