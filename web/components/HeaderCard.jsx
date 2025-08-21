@@ -1,14 +1,16 @@
-import { Box } from "@shopify/polaris";
+import { Box, Button, InlineStack } from "@shopify/polaris";
 import { useEffect, useState } from "react";
 import { api } from "../api";
 import { useI18n } from "@shopify/react-i18n";
-import { Modal, TitleBar } from "@shopify/app-bridge-react";
-import { useAcceptAppCharge } from "../hooks/useAcceptAppCharge";
+import { Modal } from "@shopify/app-bridge-react";
+import { useNavigate } from "react-router-dom";
+import { useAppBridge } from "@shopify/app-bridge-react";
 
 export default function HeaderCard({ shopSettingsId }) {
   const [i18n] = useI18n({ id: "AppData" });
-  const [starterTrialUsed, setStarterTrialUsed] = useState(false);
-  const acceptAppCharge = useAcceptAppCharge();
+  const [starterTrialUsed, setStarterTrialUsed] = useState(false); // legacy flag; can remove later
+  const navigate = useNavigate();
+  const app = useAppBridge();
 
   useEffect(() => {
     const fetchShopSettings = async () => {
@@ -20,30 +22,33 @@ export default function HeaderCard({ shopSettingsId }) {
     fetchShopSettings();
   }, [shopSettingsId]);
 
+  const goToPlans = () => {
+    // close the modal if you opened it via appBridge
+    try { app?.modal?.hide?.("accept-charge-model"); } catch {}
+    navigate("/plans");
+  };
+
   return (
     <Modal id="accept-charge-model">
       <Box padding="400">
         <p>{i18n.translate("AppData.ChargeCard.p1")}</p>
         <ul>
-          <li>Starter: $1 for 7-day trial (max 50 images)</li>
-          <li>{i18n.translate("AppData.ChargeCard.ul2")}</li>
-          <li>{i18n.translate("AppData.ChargeCard.ul3")}</li>
+          {/* Update this copy to match your new model */}
+          <li>7-day free trial (up to 50 images)</li>
+          <li>$14/month Pro — unlimited images</li>
         </ul>
         <p>{i18n.translate("AppData.ChargeCard.p2")}</p>
+
+        <InlineStack gap="300" align="end">
+          <Button onClick={() => goToPlans()} variant="primary">
+            Manage plan
+          </Button>
+          {/* Optional: a dismiss button */}
+          <Button onClick={() => app?.modal?.hide?.("accept-charge-model")}>
+            Not now
+          </Button>
+        </InlineStack>
       </Box>
-    <TitleBar title={i18n.translate("AppData.ChargeCard.title")}>
-      <button
-        onClick={() => acceptAppCharge("starter")}
-        disabled={starterTrialUsed}
-      >
-        {starterTrialUsed
-        ? i18n.translate("AppData.ChargeCard.trialUsed")
-        : i18n.translate("AppData.ChargeCard.trial")}
-      </button>
-      <button variant="primary" onClick={() => acceptAppCharge("pro")}>
-        {i18n.translate("AppData.ChargeCard.proPlan")}
-      </button>
-    </TitleBar>
     </Modal>
   );
 }

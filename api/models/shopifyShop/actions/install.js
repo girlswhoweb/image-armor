@@ -1,4 +1,9 @@
 import { transitionState, applyParams, save, ActionOptions, ShopifyShopState, InstallShopifyShopActionContext } from "gadget-server";
+import { identifyShop } from "../../../services/mantle";
+
+export async function onSuccess({ record, api }) {
+  await identifyShop({ shop: record, api });
+}
 
 /**
  * @param { InstallShopifyShopActionContext } context

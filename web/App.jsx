@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useMemo } from 'react';
+import React, { lazy, Suspense, useMemo, useEffect } from 'react';
 import { AppType, Provider as GadgetProvider, useGadget } from "@gadgetinc/react-shopify-app-bridge";
 import { Page, Spinner, Text } from "@shopify/polaris";
 import { api } from "./api";
@@ -11,6 +11,9 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import { useFindFirst } from "@gadgetinc/react";
+import { MantleProvider } from "@heymantle/react";
+const PlansPage = lazy(() => import("./pages/PlansPage"));
 import './App.css';
 
 // Lazy load components
@@ -31,7 +34,7 @@ function Error404() {
       new URL(process.env["GADGET_PUBLIC_SHOPIFY_APP_URL"]).pathname
     )
       return navigate("/", { replace: true });
-  }, [location.pathname]);
+  }, [location.pathname, navigate]);
 
   return <div>404 not found</div>;
 }
@@ -40,70 +43,107 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
-        <Route index element={
-          <Suspense fallback={<div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}><Spinner /></div>}>
-            <WelcomePage />
-          </Suspense>
-        } />
-        <Route path="/watermark" element={
-          <Suspense fallback={<div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}><Spinner /></div>}>
-            <ShopPage />
-          </Suspense>
-        } />
+        <Route
+          index
+          element={
+            <Suspense fallback={
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+                <Spinner />
+              </div>
+            }>
+              <WelcomePage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/watermark"
+          element={
+            <Suspense fallback={
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+                <Spinner />
+              </div>
+            }>
+              <ShopPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/plans"
+          element={
+            <Suspense fallback={<div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}><Spinner /></div>}>
+              <PlansPage/>
+            </Suspense>
+          }
+        />
         <Route path="*" element={<Error404 />} />
       </Route>
     )
   );
 
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 function Layout() {
-  // const appBridgeRouter = useMemo(
-  //   () => ({
-  //     location,
-  //     history,
-  //   }),
-  //   [location, history]
-  // );
-  
   return (
     <GadgetProvider
       type={AppType.Embedded}
       shopifyApiKey={window.gadgetConfig.apiKeys.shopify}
       api={api}
-      // router={appBridgeRouter}
     >
       <AuthenticatedApp />
     </GadgetProvider>
   );
 }
 
-
 function AuthenticatedApp() {
-  // we use `isAuthenticated` to render pages once the OAuth flow is complete!
   const { isAuthenticated, loading } = useGadget();
   return !isAuthenticated && !loading ? <UnauthenticatedApp /> : <EmbeddedApp />;
-  // return isAuthenticated ? <EmbeddedApp /> : <UnauthenticatedApp />;
 }
 
 function EmbeddedApp() {
   if (MAINTENANCE_MODE) {
     return (
-      <Suspense fallback={<div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}><Spinner /></div>}>
+      <Suspense fallback={
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+          <Spinner />
+        </div>
+      }>
         <Maintenance />
       </Suspense>
     );
   }
-  
+
+  // 🔑 Fetch Mantle customer token from shopifyShop (set during install/update via identify())
+  const [{ data: shop, fetching }] = useFindFirst(api.shopifyShop, {
+    select: { mantleApiToken: true }
+  });
+
+  if (fetching) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <Spinner />
+      </div>
+    );
+  }
+
+  // If token is missing, show a friendly message (usually means identify() hasn't run yet)
+  if (!shop?.mantleApiToken) {
+    return (
+      <Page title="Loading">
+        <Text variant="bodyMd" as="p">
+          Initializing billing… If this screen persists, ensure your Shopify Shop actions call Mantle <code>identify()</code> and save <code>mantleApiToken</code>.
+        </Text>
+      </Page>
+    );
+  }
+
   return (
-    <>
+    <MantleProvider
+      appId={process.env.GADGET_PUBLIC_MANTLE_APP_ID}
+      customerApiToken={shop.mantleApiToken}
+    >
       <Outlet />
-    </>
+    </MantleProvider>
   );
 }
 

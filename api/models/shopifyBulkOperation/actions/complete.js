@@ -1,4 +1,4 @@
-import { PutObjectCommand, S3, S3Client } from "@aws-sdk/client-s3";
+import { S3 } from "@aws-sdk/client-s3";
 import { SFN } from "@aws-sdk/client-sfn";
 import { transitionState, applyParams, preventCrossShopDataAccess, finishBulkOperation, save, ActionOptions, ShopifyBulkOperationState, CompleteShopifyBulkOperationActionContext } from "gadget-server";
 
@@ -16,160 +16,216 @@ export async function run({ params, record, logger, api, connections }) {
 /**
  * @param { CompleteShopifyBulkOperationActionContext } context
  */
+/**
+ * @param { CompleteShopifyBulkOperationActionContext } context
+ */
 export async function onSuccess({ params, record, logger, api, connections }) {
   // =========== MAIN ===========
-  // Find the shop settings and update the processStatus
-  const shopSettings = await api.shopSettings.findByShopId(record.shopId)
+  const shopSettings = await api.shopSettings.findByShopId(record.shopId);
   const activeSettings = shopSettings.activeData;
-  const featuredOnly = activeSettings.featuredOnly;
-  const processStatus = shopSettings.processStatus
+  const featuredOnly = !!activeSettings?.featuredOnly;
+  const processStatus = shopSettings.processStatus;
 
-  // Expire starter plan if older than 7 days
-if (shopSettings.starterPlanUser && shopSettings.starterPlanStartDate) {
-  const start = new Date(shopSettings.starterPlanStartDate);
-  const now = new Date();
-  const diffDays = (now - start) / (1000*60*60*24);
-
-  if (diffDays > 7) {
-    await api.shopSettings.update(shopSettings.id, {
-      starterPlanUser: false,
-      isPaidUser: false
-    });
-    console.log("Starter plan expired for shop", shopSettings.shopUrl);
+  // Expire legacy starter plan after 7 days (kept from your code)
+  if (shopSettings.starterPlanUser && shopSettings.starterPlanStartDate) {
+    const start = new Date(shopSettings.starterPlanStartDate);
+    const now = new Date();
+    const diffDays = (now - start) / (1000 * 60 * 60 * 24);
+    if (diffDays > 7) {
+      await api.shopSettings.update(shopSettings.id, {
+        starterPlanUser: false,
+        isPaidUser: false
+      });
+      console.log("Starter plan expired for shop", shopSettings.shopUrl);
+    }
   }
-}
 
-  
-  if(!processStatus || (record.id.toString() !== processStatus?.operationId?.replace("gid://shopify/BulkOperation/", "")) || record.status !== "completed") {
+  // Sanity: ensure this callback corresponds to the tracked operation
+  if (
+    !processStatus ||
+    record.status !== "completed" ||
+    (processStatus.operationId &&
+     record.id.toString() !== processStatus.operationId.replace("gid://shopify/BulkOperation/", ""))
+  ) {
     console.log("webhook not matching");
-    return
+    return;
   }
 
-  if(record.type === "query"){
-    // Get the media list from the bulk operation
-    const mediaList = []
-  
-    // Fetch the file from shopify and bulk create records in database
-    const response = await fetch(record.url)
+  // ---------------------------
+  // TYPE: QUERY  (build worklist, clamp by trial remaining, start SFN)
+  // ---------------------------
+  if (record.type === "query") {
+    // Compute trial state & remaining allowance
+    const now = new Date();
+    let onTrial = false;
+    if (shopSettings.starterPlanUser && shopSettings.starterPlanStartDate) {
+      const start = new Date(shopSettings.starterPlanStartDate);
+      const diffDays = (now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+      onTrial = diffDays <= 7;
+    }
+    const TRIAL_CAP = 50;
+    const used = Number(shopSettings.markedImagesCount || 0);
+    const remainingTrial =
+      (!shopSettings.isPaidUser && onTrial) ? Math.max(0, TRIAL_CAP - used) : Number.POSITIVE_INFINITY;
+
+    if (remainingTrial === 0) {
+      await api.shopSettings.update(shopSettings.id, {
+      processStatus: { ...(processStatus || {}), state: "LIMITED", updatedAt: new Date() }
+    });
+    return;
+    }
+
+    // Build media list (respect remainingTrial)
+    const mediaList = [];
+    const response = await fetch(record.url);
     const textData = await response.text();
-    /** @type {Array} */
-    const jsonLines = textData.split('\n');
+    const jsonLines = textData.split("\n");
+
     for (const jsonLine of jsonLines) {
-      // Limit to 50 images for free users
-      if(shopSettings.isPaidUser !== true && mediaList.length > 50){
-        break
+      if (
+        remainingTrial !== Number.POSITIVE_INFINITY &&
+        mediaList.length >= remainingTrial
+      ) {
+        break; // clamp exactly to remaining
       }
-      if(jsonLine.length > 0){
-        const jsonData = JSON.parse(jsonLine)
-        if (featuredOnly){
-          if(jsonData?.id?.includes("gid://shopify/Product/")){
-            const mediaUrl = jsonData?.featuredMedia?.preview?.image?.src
-            const parentId = jsonData?.id
-            const mediaId = jsonData?.featuredMedia?.id
-            const altText = jsonData?.featuredMedia?.alt
-            if(mediaUrl){
-              mediaList.push({
-                mediaUrl: mediaUrl,
-                parentId: parentId,
-                mediaId: mediaId,
-                altText: altText,
-              })
-            }
+      if (!jsonLine) continue;
+
+      const jsonData = JSON.parse(jsonLine);
+
+      if (featuredOnly) {
+        if (jsonData?.id?.includes("gid://shopify/Product/")) {
+          const mediaUrl = jsonData?.featuredMedia?.preview?.image?.src;
+          const parentId = jsonData?.id;
+          const mediaId = jsonData?.featuredMedia?.id;
+          const altText = jsonData?.featuredMedia?.alt;
+          if (mediaUrl) {
+            mediaList.push({ mediaUrl, parentId, mediaId, altText });
           }
-        } else {
-          if (jsonData?.mediaContentType === "IMAGE") {
-            const mediaUrl = jsonData?.preview?.image?.src
-            const parentId = jsonData['__parentId']
-            const mediaId = jsonData?.id
-            const altText = jsonData?.alt
-            if(mediaUrl){
-              mediaList.push({
-                mediaUrl: mediaUrl,
-                parentId: parentId,
-                mediaId: mediaId,
-                altText: altText,
-              });
-            }
+        }
+      } else {
+        if (jsonData?.mediaContentType === "IMAGE") {
+          const mediaUrl = jsonData?.preview?.image?.src;
+          const parentId = jsonData["__parentId"];
+          const mediaId = jsonData?.id;
+          const altText = jsonData?.alt;
+          if (mediaUrl) {
+            mediaList.push({ mediaUrl, parentId, mediaId, altText });
           }
         }
       }
     }
 
-    // Check if image count is greater than 0
-    if(mediaList.length === 0){
-      console.log("No images found");
-      return
+    // If nothing allowed, set LIMITED and stop
+    if (mediaList.length === 0) {
+      await api.shopSettings.update(shopSettings.id, {
+        processStatus: { ...(processStatus || {}), state: "LIMITED", updatedAt: new Date() }
+      });
+      return;
     }
-  
-    // Trigger the AWS Step Function to process the images
+
+    // Prepare infra clients
     const sfnClient = new SFN({
       region: "us-east-1",
       credentials: {
         accessKeyId: process.env.AWS_SFN_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SFN_SECRET_ACCESS_KEY
-      },
-    })
+      }
+    });
     const s3Client = new S3({
       region: "us-east-1",
       credentials: {
         accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY
-      },
+      }
     });
 
-    // To track the state of the operation PROCESSING, FAILED, COMPLETED
-    let stateUpdate = ""
-
-    const inputJson = JSON.stringify(mediaList)
-    const inputJsonKey = shopSettings.shopUrl + "/input/" + record.id + ".json";
-    // Save the inputJson to S3 for Step Function
+    // Upload batch input
+    const inputJson = JSON.stringify(mediaList);
+    const inputJsonKey = `${shopSettings.shopUrl}/input/${record.id}.json`;
     await s3Client.putObject({
       Bucket: "watermark-app",
       Key: inputJsonKey,
       Body: inputJson,
-      ContentType: "application/json",
-    })
+      ContentType: "application/json"
+    });
 
-    // Trigger the AWS Step Function
-    await sfnClient.startExecution({
-      stateMachineArn: "arn:aws:states:us-east-1:140023387777:stateMachine:WatermarkSteps-dev",
-      name: record.shopId + "-" + record.id,
-      input: JSON.stringify({
-        shopId: record.shopId,
-        shopUrl: shopSettings.shopUrl,
-        inputBucket: "watermark-app",
-        inputJson: inputJsonKey,
-        operationId: record.id,
-      }),
-    }).then(res => {
-      stateUpdate = "PROCESSING"
-    }).catch(e => {
+    const plannedCount = mediaList.length;
+    let stateUpdate = "";
+
+    // Start Step Function (call ONCE)
+    try {
+      await sfnClient.startExecution({
+        stateMachineArn: "arn:aws:states:us-east-1:140023387777:stateMachine:WatermarkSteps-dev",
+        name: `${record.shopId}-${record.id}`,
+        input: JSON.stringify({
+          shopId: record.shopId,
+          shopUrl: shopSettings.shopUrl,
+          inputBucket: "watermark-app",
+          inputJson: inputJsonKey,
+          operationId: record.id,
+          plannedCount // pass along for reference if you want
+        })
+      });
+      stateUpdate = "PROCESSING";
+    } catch (e) {
       console.error("Error at SFN trigger:", e);
       console.error("Error details:", e.$metadata ? JSON.stringify(e.$metadata) : "No metadata");
-      stateUpdate = "FAILED"
-    })
-  
-    // Update the shopSettings processStatus
+      stateUpdate = "FAILED";
+    }
+
+    // Persist state + plannedCount
     await api.shopSettings.update(shopSettings.id, {
       processStatus: {
         ...processStatus,
-        state: stateUpdate
+        state: stateUpdate,
+        plannedCount: stateUpdate === "PROCESSING" ? plannedCount : 0
       }
-    })
+    });
+
+    return;
   }
 
-  if (record.type === "mutation"){
-    // Mark task as completed in the database
-    await api.shopSettings.update(shopSettings.id, {
+  // ---------------------------
+  // TYPE: MUTATION  (mark completed, send usage to Mantle, bump local counter)
+  // ---------------------------
+  if (record.type === "mutation") {
+    // Re-fetch to avoid stale processStatus/plannedCount
+    const fresh = await api.shopSettings.findByShopId(record.shopId);
+    const plannedCount = Number(fresh?.processStatus?.plannedCount || 0);
+
+    // Mark COMPLETE and clear plannedCount
+    await api.shopSettings.update(fresh.id, {
       processStatus: {
         state: "COMPLETED",
         operationId: record.id,
         updatedAt: new Date(),
+        plannedCount: 0
       }
-    })
+    });
+
+    if (plannedCount > 0) {
+    try {
+      const { MantleClient } = await import("@heymantle/client");
+      const mantle = new MantleClient({
+        appId: process.env.GADGET_PUBLIC_MANTLE_APP_ID,
+        apiKey: process.env.MANTLE_API_KEY
+      });
+      await mantle.sendUsageEvent({
+        eventName: "images_generated", // metric = sum of property 'count'
+        properties: { count: plannedCount }
+      });
+    } catch (err) {
+      console.error("Mantle usage send failed:", err);
+      // (don’t throw; avoid breaking completion flow)
+    }
+
+    const newTotal = Number(fresh.markedImagesCount || 0) + plannedCount;
+    await api.shopSettings.update(fresh.id, { markedImagesCount: newTotal });
   }
-  
-};
+
+    return;
+  }
+}
 
 /** @type { ActionOptions } */
 export const options = {
