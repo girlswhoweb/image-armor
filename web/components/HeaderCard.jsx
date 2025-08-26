@@ -33,17 +33,14 @@ export default function HeaderCard({ shopSettingsId }) {
       <Box padding="400">
         <p>{i18n.translate("AppData.ChargeCard.p1")}</p>
         <ul>
-          {/* Update this copy to match your new model */}
-          <li>7-day free trial (up to 50 images)</li>
-          <li>$14/month Pro — unlimited images</li>
+          <li>$14/month Pro — unlimited images - 7-day free trial (up to 50 images)</li>
         </ul>
         <p>{i18n.translate("AppData.ChargeCard.p2")}</p>
 
         <InlineStack gap="300" align="end">
           <Button onClick={() => goToPlans()} variant="primary">
-            Manage plan
+            Try it
           </Button>
-          {/* Optional: a dismiss button */}
           <Button onClick={() => app?.modal?.hide?.("accept-charge-model")}>
             Not now
           </Button>

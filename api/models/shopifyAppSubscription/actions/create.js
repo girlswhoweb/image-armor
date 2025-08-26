@@ -17,9 +17,7 @@ export async function onSuccess({ record, api }) {
     const shopSettings = await api.shopSettings.findByShopId(record.shopId);
     if (!shopSettings) return;
 
-    const name = record.name.toLowerCase();
-
-    if (name.includes("pro")) {
+    if (shopSettings) {
       await api.shopSettings.update(shopSettings.id, {
         isPaidUser: true,
         starterPlanUser: false
@@ -27,6 +25,22 @@ export async function onSuccess({ record, api }) {
     }
   }
 }
+
+// export async function onSuccess({ record, api }) {
+//   if (record.status === "ACTIVE") {
+//     const shopSettings = await api.shopSettings.findByShopId(record.shopId);
+//     if (!shopSettings) return;
+
+//     const name = record.name.toLowerCase();
+
+//     if (name.includes("pro")) {
+//       await api.shopSettings.update(shopSettings.id, {
+//         isPaidUser: true,
+//         starterPlanUser: false
+//       });
+//     }
+//   }
+// }
 
 
 /** @type { ActionOptions } */

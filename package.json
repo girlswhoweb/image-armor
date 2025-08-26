@@ -5,6 +5,7 @@
   "description": "Internal package for Gadget app Dinoimage (Development environment)",
   "license": "UNLICENSED",
   "dependencies": {
+    "@heymantle/polaris": "^12",
     "@aws-sdk/client-lambda": "^3.485.0",
     "@aws-sdk/client-s3": "^3.433.0",
     "@aws-sdk/client-sfn": "^3.485.0",

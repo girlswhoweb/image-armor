@@ -13,20 +13,34 @@ export async function run({ params, record, logger, api, connections }) {
  * @param { UpdateShopifyAppSubscriptionActionContext } context
  */
 export async function onSuccess({ record, api }) {
-  const anyActivePlan = await api.shopifyAppSubscription.maybeFindFirst({
-    filter: { status: { equals: "ACTIVE" } }
+  const anyActive = await api.shopifyAppSubscription.maybeFindFirst({
+    filter: { status: { equals: "ACTIVE" }, shopId: { equals: record.shopId } }
   });
-
   const shopSettings = await api.shopSettings.findByShopId(record.shopId);
   if (!shopSettings) return;
 
-  if (!anyActivePlan) {
-    await api.shopSettings.update(shopSettings.id, {
-      isPaidUser: false,
-      starterPlanUser: false
-    });
-  }
+  await api.shopSettings.update(shopSettings.id, {
+    isPaidUser: !!anyActive,
+    starterPlanUser: false
+  });
 }
+
+
+// export async function onSuccess({ record, api }) {
+//   const anyActivePlan = await api.shopifyAppSubscription.maybeFindFirst({
+//     filter: { status: { equals: "ACTIVE" } }
+//   });
+
+//   const shopSettings = await api.shopSettings.findByShopId(record.shopId);
+//   if (!shopSettings) return;
+
+//   if (!anyActivePlan) {
+//     await api.shopSettings.update(shopSettings.id, {
+//       isPaidUser: false,
+//       starterPlanUser: false
+//     });
+//   }
+// }
 
 
 /** @type { ActionOptions } */

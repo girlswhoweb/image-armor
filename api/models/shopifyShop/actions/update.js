@@ -1,28 +1,21 @@
-import { applyParams, preventCrossShopDataAccess, save, ActionOptions, UpdateShopifyShopActionContext } from "gadget-server";
-import { identifyShop } from "../../../services/mantle";
+// api/models/shopifyShop/actions/update.js
+import { applyParams, save, preventCrossShopDataAccess } from "gadget-server";
+import { identifyShop } from "../../../services/mantle.js";
 
-export async function onSuccess({ record, api }) {
-  await identifyShop({ shop: record, api });
-}
-
-/**
- * @param { UpdateShopifyShopActionContext } context
- */
-export async function run({ params, record, logger, api }) {
+export async function run({ params, record }) {
   applyParams(params, record);
   await preventCrossShopDataAccess(params, record);
   await save(record);
-};
+}
 
-/**
- * @param { UpdateShopifyShopActionContext } context
- */
-export async function onSuccess({ params, record, logger, api }) {
-  // Your logic goes here
-};
+export async function onSuccess({ record, api, logger }) {
+  try {
+    if (!record.mantleApiToken) {
+      await identifyShop({ shopId: record.id, api, logger });
+    }
+  } catch (e) {
+    logger.error("Mantle identify (update) failed", e?.message || String(e));
+  }
+}
 
-/** @type { ActionOptions } */
-export const options = {
-  actionType: "update",
-  triggers: { api: false },
-};
+export const options = { actionType: "update", triggers: { shopify: {}, api: true    } };

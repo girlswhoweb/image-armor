@@ -1,6 +1,6 @@
-import React, { lazy, Suspense, useMemo, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { AppType, Provider as GadgetProvider, useGadget } from "@gadgetinc/react-shopify-app-bridge";
-import { Page, Spinner, Text } from "@shopify/polaris";
+import { Page, Spinner, Text, Button } from "@shopify/polaris";
 import { api } from "./api";
 import {
   Outlet,
@@ -14,6 +14,12 @@ import {
 import { useFindFirst } from "@gadgetinc/react";
 import { MantleProvider } from "@heymantle/react";
 const PlansPage = lazy(() => import("./pages/PlansPage"));
+
+// for debugging
+// const res = await api.fetch("/mantle-identify-now", { method: "POST" });
+// const json = await res.json();
+// console.log(json);
+
 import './App.css';
 
 // Lazy load components
@@ -126,15 +132,8 @@ function EmbeddedApp() {
     );
   }
 
-  // If token is missing, show a friendly message (usually means identify() hasn't run yet)
   if (!shop?.mantleApiToken) {
-    return (
-      <Page title="Loading">
-        <Text variant="bodyMd" as="p">
-          Initializing billing… If this screen persists, ensure your Shopify Shop actions call Mantle <code>identify()</code> and save <code>mantleApiToken</code>.
-        </Text>
-      </Page>
-    );
+    return <LoadingBilling />;
   }
 
   return (
@@ -156,5 +155,47 @@ function UnauthenticatedApp() {
     </Page>
   );
 }
+
+function LoadingBilling() {
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  const retry = async () => {
+    try {
+      setBusy(true);
+      setMsg("Contacting billing…");
+      // IMPORTANT: use api.fetch (targets your Gadget origin & includes session)
+      const res = await api.fetch("/mantle-identify-now", { method: "POST" });
+      const data = await res.json().catch(() => ({}));
+      console.log("identify-now:", data);
+      if (data?.mantleApiToken) {
+        setMsg("Token saved. Reloading…");
+        location.reload();
+      } else {
+        setMsg(`Still no token (${data?.reason || "unknown"}). Check env vars.`);
+      }
+    } catch (e) {
+      setMsg(`Error: ${String(e)}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <Page title="Loading">
+      <Text as="p" variant="bodyMd">
+        Initializing billing… If this persists, click “Retry billing setup”.
+      </Text>
+      <div style={{ marginTop: 12, display: "flex", gap: 8, alignItems: "center" }}>
+        <Button onClick={retry} loading={busy} variant="primary">
+          Retry billing setup
+        </Button>
+        {busy ? <Spinner size="small" /> : null}
+        {msg ? <Text as="span" tone="subdued">{msg}</Text> : null}
+      </div>
+    </Page>
+  );
+}
+
 
 export default App;

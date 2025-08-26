@@ -32,6 +32,7 @@ export const schema: GadgetModel = {
       storageKey:
         "ModelField-DataModel-Shopify-Shop-force_ssl::FieldStorageEpoch-DataModel-Shopify-Shop-force_ssl-initial",
     },
+    mantleApiToken: { type: "string", storageKey: "9zHdwSLej6uW" },
     markedImagesCount: {
       type: "computed",
       sourceFile: "api/models/shopifyShop/markedImagesCount.gelly",
