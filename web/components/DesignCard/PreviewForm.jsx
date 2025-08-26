@@ -167,7 +167,7 @@ function PreviewForm({
               // label={i18n.translate("AppData.WatermarkCard.opacity")}
               value={appSettings?.opacity}
               onChange={(val) =>
-                setAppSettings({ ...appSettings, isSaved: false, opacity: val, isSaved: false })
+                setAppSettings({ ...appSettings, opacity: val, isSaved: false })
               }
               onBlur={(e) =>
                 setAppSettings({
@@ -229,7 +229,7 @@ function PreviewForm({
                       fullWidth
                       textAlign="left"
                       disclosure="select"
-                      onClick={() => setShowFontStyle(!showFont)}
+                      onClick={() => setShowFontStyle(!showFontStyle)}
                     >
                       {
                         fontStyle.find(

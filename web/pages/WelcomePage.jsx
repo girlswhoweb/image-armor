@@ -73,7 +73,29 @@ export default function WelcomePage() {
           </Card>
         </Layout.Section>
         <Layout.Section><HelpCard /></Layout.Section>
-        <Layout.Section></Layout.Section>
+        <Layout.Section>
+          <Card padding="400">
+            <BlockStack gap="400">
+              <BlockStack gap="200">
+                <Text variant="headingMd">
+                  <span style={{ color: '#d773aa' }}>
+                    Manage Your Subscription
+                  </span>
+                </Text>
+                <Text variant="bodyMd" tone="subdued">View and manage your subscription details, including billing information and plan changes.</Text>
+              </BlockStack>
+              <InlineStack align="start" blockAlign="start">
+                <Button
+                  onClick={() => navigate("/plans")}
+                  size="large"
+                >
+                  Plans & billing
+                </Button>
+              </InlineStack>
+            </BlockStack>
+          </Card>
+        </Layout.Section>
+        
       </Layout>
     </Page>
   )
