@@ -55,135 +55,139 @@ export async function onSuccess({ params, record, logger, api, connections }) {
   // TYPE: QUERY  (build worklist, clamp by trial remaining, start SFN)
   // ---------------------------
   if (record.type === "query") {
-    // Compute trial state & remaining allowance
-    const now = new Date();
-    let onTrial = false;
-    if (shopSettings.starterPlanUser && shopSettings.starterPlanStartDate) {
-      const start = new Date(shopSettings.starterPlanStartDate);
-      const diffDays = (now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
-      onTrial = diffDays <= 7;
-    }
-    const TRIAL_CAP = 50;
-    const used = Number(shopSettings.markedImagesCount || 0);
-    const remainingTrial =
-      (!shopSettings.isPaidUser && onTrial) ? Math.max(0, TRIAL_CAP - used) : Number.POSITIVE_INFINITY;
+  const paid = !!shopSettings.isPaidUser;
 
-    if (remainingTrial === 0) {
-      await api.shopSettings.update(shopSettings.id, {
+  // Source of truth for trial comes from your DB
+  const trialEverStarted = !!shopSettings.trialEverStarted;
+  const trialEndsAtMs = shopSettings.trialEndsAt ? new Date(shopSettings.trialEndsAt).getTime() : 0;
+  const inTrial = !paid && trialEverStarted && Date.now() < trialEndsAtMs;
+
+  // Hard stop: unpaid and not in trial
+  if (!paid && !inTrial) {
+    await api.shopSettings.update(shopSettings.id, {
       processStatus: { ...(processStatus || {}), state: "LIMITED", updatedAt: new Date() }
     });
     return;
-    }
+  }
 
-    // Build media list (respect remainingTrial)
-    const mediaList = [];
-    const response = await fetch(record.url);
-    const textData = await response.text();
-    const jsonLines = textData.split("\n");
+  // Trial cap only while inTrial
+  const TRIAL_CAP = 50;
+  const used = Number(shopSettings.markedImagesCount || 0);
+  const remainingAllowance = inTrial ? Math.max(0, TRIAL_CAP - used) : Number.POSITIVE_INFINITY;
 
-    for (const jsonLine of jsonLines) {
-      if (
-        remainingTrial !== Number.POSITIVE_INFINITY &&
-        mediaList.length >= remainingTrial
-      ) {
-        break; // clamp exactly to remaining
-      }
-      if (!jsonLine) continue;
-
-      const jsonData = JSON.parse(jsonLine);
-
-      if (featuredOnly) {
-        if (jsonData?.id?.includes("gid://shopify/Product/")) {
-          const mediaUrl = jsonData?.featuredMedia?.preview?.image?.src;
-          const parentId = jsonData?.id;
-          const mediaId = jsonData?.featuredMedia?.id;
-          const altText = jsonData?.featuredMedia?.alt;
-          if (mediaUrl) {
-            mediaList.push({ mediaUrl, parentId, mediaId, altText });
-          }
-        }
-      } else {
-        if (jsonData?.mediaContentType === "IMAGE") {
-          const mediaUrl = jsonData?.preview?.image?.src;
-          const parentId = jsonData["__parentId"];
-          const mediaId = jsonData?.id;
-          const altText = jsonData?.alt;
-          if (mediaUrl) {
-            mediaList.push({ mediaUrl, parentId, mediaId, altText });
-          }
-        }
-      }
-    }
-
-    // If nothing allowed, set LIMITED and stop
-    if (mediaList.length === 0) {
-      await api.shopSettings.update(shopSettings.id, {
-        processStatus: { ...(processStatus || {}), state: "LIMITED", updatedAt: new Date() }
-      });
-      return;
-    }
-
-    // Prepare infra clients
-    const sfnClient = new SFN({
-      region: "us-east-1",
-      credentials: {
-        accessKeyId: process.env.AWS_SFN_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SFN_SECRET_ACCESS_KEY
-      }
-    });
-    const s3Client = new S3({
-      region: "us-east-1",
-      credentials: {
-        accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY
-      }
-    });
-
-    // Upload batch input
-    const inputJson = JSON.stringify(mediaList);
-    const inputJsonKey = `${shopSettings.shopUrl}/input/${record.id}.json`;
-    await s3Client.putObject({
-      Bucket: "watermark-app",
-      Key: inputJsonKey,
-      Body: inputJson,
-      ContentType: "application/json"
-    });
-
-    const plannedCount = mediaList.length;
-    let stateUpdate = "";
-
-    // Start Step Function (call ONCE)
-    try {
-      await sfnClient.startExecution({
-        stateMachineArn: "arn:aws:states:us-east-1:140023387777:stateMachine:WatermarkSteps-dev",
-        name: `${record.shopId}-${record.id}`,
-        input: JSON.stringify({
-          shopId: record.shopId,
-          shopUrl: shopSettings.shopUrl,
-          inputBucket: "watermark-app",
-          inputJson: inputJsonKey,
-          operationId: record.id,
-          plannedCount // pass along for reference if you want
-        })
-      });
-      stateUpdate = "PROCESSING";
-    } catch (e) {
-      console.error("Error at SFN trigger:", e);
-      console.error("Error details:", e.$metadata ? JSON.stringify(e.$metadata) : "No metadata");
-      stateUpdate = "FAILED";
-    }
-
-    // Persist state + plannedCount
+  if (remainingAllowance === 0) {
     await api.shopSettings.update(shopSettings.id, {
-      processStatus: {
-        ...processStatus,
-        state: stateUpdate,
-        plannedCount: stateUpdate === "PROCESSING" ? plannedCount : 0
-      }
+      processStatus: { ...(processStatus || {}), state: "LIMITED", updatedAt: new Date() }
     });
-
     return;
   }
+
+  // Build media list (clamped by remainingAllowance if in trial)
+  const mediaList = [];
+  const response = await fetch(record.url);
+  const textData = await response.text();
+  const jsonLines = textData.split("\n");
+
+  for (const jsonLine of jsonLines) {
+    if (remainingAllowance !== Number.POSITIVE_INFINITY && mediaList.length >= remainingAllowance) break;
+    if (!jsonLine) continue;
+    const jsonData = JSON.parse(jsonLine);
+
+    if (featuredOnly) {
+      if (jsonData?.id?.includes("gid://shopify/Product/")) {
+        const mediaUrl = jsonData?.featuredMedia?.preview?.image?.src;
+        const parentId = jsonData?.id;
+        const mediaId = jsonData?.featuredMedia?.id;
+        const altText = jsonData?.featuredMedia?.alt;
+        if (mediaUrl) mediaList.push({ mediaUrl, parentId, mediaId, altText });
+      }
+    } else {
+      if (jsonData?.mediaContentType === "IMAGE") {
+        const mediaUrl = jsonData?.preview?.image?.src;
+        const parentId = jsonData["__parentId"];
+        const mediaId = jsonData?.id;
+        const altText = jsonData?.alt;
+        if (mediaUrl) mediaList.push({ mediaUrl, parentId, mediaId, altText });
+      }
+    }
+  }
+
+  // If truly no items to process, don’t mark LIMITED (that’s only for allowance)
+  if (mediaList.length === 0) {
+    await api.shopSettings.update(shopSettings.id, {
+      processStatus: {
+        ...(processStatus || {}),
+        state: "FAILED",              // or "COMPLETED" if you prefer
+        plannedCount: 0,
+        operationId: record.id,
+        updatedAt: new Date()
+      }
+    });
+    return;
+  }
+
+  // ----- Proceed with S3 upload + Step Function trigger -----
+  const sfnClient = new SFN({
+    region: "us-east-1",
+    credentials: {
+      accessKeyId: process.env.AWS_SFN_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SFN_SECRET_ACCESS_KEY
+    }
+  });
+  const s3Client = new S3({
+    region: "us-east-1",
+    credentials: {
+      accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY
+    }
+  });
+
+  const inputJson = JSON.stringify(mediaList);
+  const inputJsonKey = `${shopSettings.shopUrl}/input/${record.id}.json`;
+  await s3Client.putObject({
+    Bucket: "watermark-app",
+    Key: inputJsonKey,
+    Body: inputJson,
+    ContentType: "application/json"
+  });
+
+  const plannedCount = mediaList.length;
+  let stateUpdate = "";
+
+  try {
+    await sfnClient.startExecution({
+      stateMachineArn: "arn:aws:states:us-east-1:140023387777:stateMachine:WatermarkSteps-dev",
+      name: `${record.shopId}-${record.id}`,
+      input: JSON.stringify({
+        shopId: record.shopId,
+        shopUrl: shopSettings.shopUrl,
+        inputBucket: "watermark-app",
+        inputJson: inputJsonKey,
+        operationId: record.id,
+        plannedCount
+      })
+    });
+    stateUpdate = "PROCESSING";
+  } catch (e) {
+    console.error("Error at SFN trigger:", e);
+    console.error(
+      "Error details:",
+      e.$metadata ? JSON.stringify(e.$metadata) : "No metadata"
+    );
+    stateUpdate = "FAILED";
+  }
+
+  await api.shopSettings.update(shopSettings.id, {
+    processStatus: {
+      ...processStatus,
+      state: stateUpdate,
+      plannedCount: stateUpdate === "PROCESSING" ? plannedCount : 0
+    }
+  });
+
+  return;
+}
+
 
   // ---------------------------
   // TYPE: MUTATION  (mark completed, send usage to Mantle, bump local counter)

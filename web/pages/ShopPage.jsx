@@ -2,6 +2,7 @@ import { useFindFirst } from "@gadgetinc/react";
 import {
   Banner,
   BlockStack,
+  Button,
   Card,
   Frame,
   InlineStack,
@@ -26,7 +27,6 @@ import { useGadget } from "@gadgetinc/react-shopify-app-bridge";
 import { SaveBar, useAppBridge } from "@shopify/app-bridge-react";
 import { useNavigate } from "react-router-dom";
 import HelpCard from "../components/HelpCard";
-import { Button } from "@shopify/polaris";
 
 const ShopPage = () => {
   const [{ data, fetching, error }] = useFindFirst(api.shopSettings);
@@ -86,6 +86,94 @@ const ShopPage = () => {
     message: "",
     error: false,
   });
+
+  const [allowance, setAllowance] = useState({
+    checked: false,
+    inTrial: false,
+    remaining: Infinity,
+    isPaidUser: false,
+  });
+
+  async function loadAllowance() {
+  try {
+    const r = await api.fetch("/trial-allowance");
+    const a = await r.json();
+
+    // 🔧 force types
+    const remainingNum = Number(a?.remaining);
+    const parsedRemaining = Number.isFinite(remainingNum) ? remainingNum : Infinity;
+
+    const next = {
+      checked: true,
+      inTrial: !!a?.inTrial,
+      isPaidUser: !!a?.isPaidUser,
+      remaining: parsedRemaining,
+    };
+    setAllowance(next);
+
+    // Optional debug
+    console.log("[trial-allowance]", a, "→ parsed", next);
+  } catch (e) {
+    // Don’t block the user; the server still enforces the cap
+    setAllowance((s) => ({ ...s, checked: true }));
+    console.warn("trial-allowance fetch failed", e);
+  }
+}
+
+// Load once and also after processing finishes or when page becomes visible
+// run once on mount
+useEffect(() => {
+  loadAllowance();
+}, []);
+
+// optionally reload after server-driven state changes
+useEffect(() => {
+  const s = (processStatus?.state || "").toUpperCase();
+  if (["COMPLETED", "FAILED", "LIMITED"].includes(s)) {
+    loadAllowance();
+  }
+}, [processStatus?.state]);
+
+
+const limited = (processStatus?.state?.toUpperCase?.() === "LIMITED");
+
+useEffect(() => {
+  if (!limited) return;
+  if (!allowance.checked) return;
+
+  // If we’re not in trial anymore OR we are paid, clear LIMITED
+  if (!allowance.inTrial || allowance.isPaidUser) {
+    (async () => {
+      try {
+        await api.shopSettings.update(shopSettingsId, {
+          processStatus: {
+            ...processStatus,
+            state: "IDEL",
+            updatedAt: new Date().toISOString()
+          }
+        });
+        setProcessStatus(ps => ({ ...ps, state: "IDEL" }));
+      } catch (e) {
+        console.warn("Failed to clear LIMITED locally", e);
+      }
+    })();
+  }
+}, [
+  limited,
+  allowance.checked,
+  allowance.inTrial,
+  allowance.isPaidUser,
+  shopSettingsId,
+  processStatus
+]);
+
+const noAllowance =
+  allowance.checked &&
+  !allowance.isPaidUser &&
+  allowance.inTrial &&
+  Number(allowance.remaining) <= 0;
+
+
 
   // Re-open banner for each NEW COMPLETED run (even if user dismissed the previous one)
   useEffect(() => {
@@ -186,46 +274,74 @@ const ShopPage = () => {
     console.log("appSettings", appSettings?.isSaved);
   }, [appSettings]);
 
-  const onApply = async ({skipCharge = false}) => {
-    await shopify.saveBar.leaveConfirmation();
-    setToastData({
-      isActive: true,
-      message: `${i18n.translate("AppData.General.Updating")}...`,
-      error: false,
+  const onApply = async ({ skipCharge = false }) => {
+  await shopify.saveBar.leaveConfirmation();
+  setToastData({ isActive: true, message: `${i18n.translate("AppData.General.Updating")}...`, error: false });
+
+  try {
+    // 🔎 Preflight trial allowance
+    const r = await api.fetch("/trial-allowance");
+    const a = await r.json();
+    
+    // keep UI state in sync with server result
+    const remainingNum = Number(a?.remaining);
+    setAllowance({
+      checked: true,
+      inTrial: !!a?.inTrial,
+      isPaidUser: !!a?.isPaidUser,
+      remaining: Number.isFinite(remainingNum) ? remainingNum : Infinity,
     });
-    if (skipCharge === false && !(isPaidUser || isStarterTrialActive)) {
-      shopify.modal.show("accept-charge-model");
-      return;
+
+    if (r.ok && a?.inTrial && !a.isPaidUser) {
+      if (!Number.isFinite(a.remaining) || a.remaining <= 0) {
+        // No allowance left → immediately show LIMITED + push to Plans
+        setProcessStatus({ state: "LIMITED", updatedAt: new Date().toISOString() });
+        setToastData({ isActive: true, message: i18n.translate("AppData.HeaderCard.limitedMsg"), error: false });
+        navigate("/plans"); // or setShowPricing(true) if you have a pricing modal
+        return; // ⛔ stop here, don’t start processing
+      } else {
+        // Optional: tell them we’ll only process up to the remaining images
+        setToastData({
+          isActive: true,
+          message: `Trial limit: we’ll process up to ${a.remaining} images.`,
+          error: false
+        });
+      }
     }
-    setActivating(true);
-    try {
-      await api.shopSettings.update(shopSettingsId, {
-        isActive: true,
-        activeData: appSettings,
-        isDifferent: false,
-      });
-      setIsActive(true);
-      setIsDifferent(false);
-      setToastData({
-        isActive: true,
-        message: i18n.translate("AppData.General.Updated"),
-        error: false,
-      });
-      setProcessStatus({
-        state: "PROCESSING",
-      });
-    } catch (e) {
-      setToastData({
-        isActive: true,
-        message: "Something went wrong. Please try again or contact support.",
-        error: true,
-      });
-      setProcessStatus({
-        state: "FAILED",
-      });
-    }
+  } catch (e) {
+    // If the preflight fails, you can choose to proceed or block.
+    // I'd proceed, since your server still enforces the cap.
+    console.warn("trial-allowance preflight failed", e);
+  }
+
+  
+  // Gate ONLY if not paid AND not in (Shopify) trial
+  // use the fresh preflight result `a` rather than possibly-stale state
+  if (skipCharge === false && !(allowance.isPaidUser || allowance.inTrial || isStarterTrialActive)) {
+    shopify.modal.show("accept-charge-model");
+    return;
+  }
+
+  // 💥 Proceed with your existing processing flow
+  setActivating(true);
+  try {
+    await api.shopSettings.update(shopSettingsId, {
+      isActive: true,
+      activeData: appSettings,
+      isDifferent: false,
+    });
+    setIsActive(true);
+    setIsDifferent(false);
+    setToastData({ isActive: true, message: i18n.translate("AppData.General.Updated"), error: false });
+    setProcessStatus({ state: "PROCESSING" });
+  } catch (e) {
+    setToastData({ isActive: true, message: "Something went wrong. Please try again or contact support.", error: true });
+    setProcessStatus({ state: "FAILED" });
+  } finally {
     setActivating(false);
-  };
+  }
+};
+
 
   const onRestore = async () => {
     setToastData({
@@ -313,11 +429,17 @@ const ShopPage = () => {
         <div style={(loading || fetching || !appSettings) ? { opacity: 0.5, pointerEvents: "none" } : { opacity: 1 }}>
           <Layout>
             {/* Header Section */}
-            {processStatus?.state?.toUpperCase() === "LIMITED" && <Layout.Section>
-              <Banner tone="success">
-                {i18n.translate("AppData.HeaderCard.limitedMsg")}
-              </Banner>
-            </Layout.Section>}
+            {processStatus?.state?.toUpperCase() === "LIMITED" && (
+              <Layout.Section>
+                <Banner tone="warning">
+                  {i18n.translate("AppData.HeaderCard.limitedMsg")}
+                  <Button onClick={() => navigate("/plans")} size="large">
+                    Upgrade Now
+                  </Button>
+                </Banner>
+              </Layout.Section>
+            )}
+
             {processStatus?.state?.toUpperCase() === "FAILED" && <Layout.Section>
               <Banner tone="critical">
                 {i18n.translate("AppData.HeaderCard.failedMsg")}
@@ -371,7 +493,12 @@ const ShopPage = () => {
                             <Text as="h3" variant="bodyMd" tone="subdued">Note: When you press Process Images, the app will apply your watermark and compression to all selected files. If you prefer to just keep a preview, click Save once you’ve set your options.</Text>
                           </BlockStack>
                           <BlockStack>
-                            <Button variant="primary" onClick={onApply} icon={WandMinor} loading={activating} disabled={["PROCESSING", "REMOVING"].includes(processStatus?.state?.toUpperCase())}>{processStatus?.state?.toUpperCase() === "PROCESSING" ? `${i18n.translate("AppData.HeaderCard.processing")}...` : i18n.translate("AppData.HeaderCard.apply")}</Button>                            
+                            <Button variant="primary" onClick={onApply} icon={WandMinor} loading={activating} disabled={noAllowance || limited || ["PROCESSING", "REMOVING"].includes(processStatus?.state?.toUpperCase())}>{processStatus?.state?.toUpperCase() === "PROCESSING" ? `${i18n.translate("AppData.HeaderCard.processing")}...` : i18n.translate("AppData.HeaderCard.apply")}</Button>                            
+                            {noAllowance && (
+  <Button onClick={() => navigate("/plans")} tone="success">
+    Upgrade to continue
+  </Button>
+)}
                           </BlockStack>
                         </InlineStack>
                       </Card>

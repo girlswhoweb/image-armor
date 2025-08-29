@@ -14,7 +14,7 @@
       "activate": "Activate",
       "activating": "Activating",
       "welcome": "Welcome",
-      "limitedMsg": "Upgrade to use (you have too many images)",
+      "limitedMsg": "You’ve used all 50 trial images. Upgrade to keep using.",
       "failedMsg": "Failed to process images. Please try again or contact support.",
       "completedMsg": "All images have been processed.",
       "completedSuccessfully": "Completed successfully!",

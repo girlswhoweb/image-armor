@@ -9,7 +9,7 @@ import { api } from "../api";
 export default function WelcomePage() {
   const navigate = useNavigate();
   const { appBridge } = useGadget();
-  const [{ data: shopData, fetching: fetchingShop, error: shopError }] = useFindFirst(api.shopifyShop, {
+  const [{ data: shopData, fetching: fetchingShop, error: shopError }] = useFindFirst(api.shopSettings, {
     select: {
       id: true,
       markedImagesCount: true

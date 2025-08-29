@@ -82,6 +82,11 @@ export const schema: GadgetModel = {
         "ModelField-lUGXUEHd0265::FieldStorageEpoch-9sQUmcJparHW",
     },
     isPaidUser: { type: "boolean", storageKey: "5vqTAVRSA-Lh" },
+    markedImagesCount: {
+      type: "number",
+      default: 0,
+      storageKey: "TUO5alwzsyO9",
+    },
     processStatus: {
       type: "json",
       default: { state: "idel", operationId: null },
@@ -103,12 +108,14 @@ export const schema: GadgetModel = {
     starterPlanStartDate: {
       type: "dateTime",
       includeTime: true,
-      storageKey: "S9Y-lvljYYJU",
+      storageKey: "KR_UvH4iJjMB",
     },
-    starterPlanUser: {
-      type: "boolean",
-      default: false,
-      storageKey: "qbG5aQhFxOGn",
+    starterPlanUser: { type: "boolean", storageKey: "zNSr3BfkhlMK" },
+    trialEndsAt: {
+      type: "dateTime",
+      includeTime: true,
+      storageKey: "EdIC1GbQ4Snm",
     },
+    trialEverStarted: { type: "boolean", storageKey: "7C3mxXmbi8lG" },
   },
 };
