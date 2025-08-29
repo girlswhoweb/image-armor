@@ -146,14 +146,30 @@ function EmbeddedApp() {
   );
 }
 
+// function UnauthenticatedApp() {
+//   return (
+//     <Page title="App">
+//       <Text variant="bodyMd" as="p">
+//         App can only be viewed in the Shopify Admin.
+//       </Text>
+//     </Page>
+//   );
+// }
+
 function UnauthenticatedApp() {
-  return (
-    <Page title="App">
-      <Text variant="bodyMd" as="p">
-        App can only be viewed in the Shopify Admin.
-      </Text>
-    </Page>
-  );
+  const shopify = useAppBridge();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // If we’re inside Shopify (app bridge exists), push to /plans
+    if (shopify && location.pathname !== "/plans") {
+      navigate("/plans", { replace: true });
+    }
+  }, [shopify, location.pathname, navigate]);
+
+  // If you still want to show a message when truly outside Shopify, you can:
+  return null; // or keep the Page/Text if you want a fallback for non-admin access
 }
 
 function LoadingBilling() {
